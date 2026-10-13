@@ -1,0 +1,72 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/MkhytarMkhoian/herald/main/docs/assets/readme-banner-dark.png">
+  <img alt="Herald" src="https://raw.githubusercontent.com/MkhytarMkhoian/herald/main/docs/assets/readme-banner-light.png">
+</picture>
+
+> *A herald announces an event to whoever is listening.*
+
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-website-indigo.svg)](https://mkhytarmkhoian.github.io/herald-docs/)
+
+Herald is an analytics library for mobile apps. Your app describes what happened as an event, and
+Herald sends that event to every analytics service you use: Firebase, Adjust, Mixpanel, AppsFlyer,
+Amplitude, or one you build yourself.
+
+This repository is the **React Native SDK**. It is the same design as the
+[Android](https://github.com/MkhytarMkhoian/herald),
+[Flutter](https://github.com/MkhytarMkhoian/herald-flutter) and
+[iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, written in TypeScript, over each vendor's
+official React Native package.
+
+**In development: not on npm yet.** The core is here; the vendor packages come next.
+
+## In 30 seconds
+
+An event is a class your app owns. Text and true/false are written as they are; a number says
+whether it is whole, because JavaScript can't tell `3` from `3.0`:
+
+```ts
+import { int, type Event, type EventParameters } from '@herald-analytics/core';
+
+class CheckoutStarted implements Event {
+  readonly name = 'checkout_started';
+
+  constructor(
+    readonly plan: string,
+    readonly seats: number,
+  ) {}
+
+  get parameters(): EventParameters {
+    return { plan: this.plan, seats: int(this.seats) };
+  }
+}
+```
+
+`Herald` sends it to every vendor:
+
+```ts
+const herald = new Herald({
+  providers: [
+    new HeraldProvider({ name: 'analytics', events: analyticsTracker }),
+    new HeraldProvider({ name: 'attribution', events: attributionTracker }),
+  ],
+  errorReporter: (failure) => crashReporter.record(failure.error, `${failure}`),
+});
+
+herald.track(new CheckoutStarted('pro', 3));
+```
+
+## Packages
+
+| Package | What it is |
+| --- | --- |
+| [`@herald-analytics/core`](packages/core) | Events, properties and the `Herald` fan-out, in plain TypeScript. |
+
+## Documentation
+
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides. To work on
+Herald itself, see [CONTRIBUTING](CONTRIBUTING.md).
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE).

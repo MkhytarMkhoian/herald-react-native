@@ -1,0 +1,57 @@
+{
+  "name": "@herald-analytics/core",
+  "version": "0.0.0",
+  "description": "One analytics vocabulary, heard by every vendor. Events, properties and the Herald fan-out, in plain TypeScript with no vendor SDK.",
+  "keywords": [
+    "analytics",
+    "tracking",
+    "events",
+    "react-native"
+  ],
+  "homepage": "https://mkhytarmkhoian.github.io/herald-docs/",
+  "bugs": "https://github.com/MkhytarMkhoian/herald-react-native/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MkhytarMkhoian/herald-react-native.git",
+    "directory": "packages/core"
+  },
+  "license": "Apache-2.0",
+  "author": "Mkhytar Mkhoian",
+  "sideEffects": false,
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}
