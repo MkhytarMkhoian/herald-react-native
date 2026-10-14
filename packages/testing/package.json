@@ -1,0 +1,72 @@
+{
+  "name": "@herald-analytics/testing",
+  "version": "0.0.0",
+  "description": "A fake Herald vendor that records every event, property and call, with assertions for tests in apps that use Herald.",
+  "keywords": [
+    "analytics",
+    "testing",
+    "react-native"
+  ],
+  "homepage": "https://mkhytarmkhoian.github.io/herald-docs/",
+  "bugs": "https://github.com/MkhytarMkhoian/herald-react-native/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MkhytarMkhoian/herald-react-native.git",
+    "directory": "packages/testing"
+  },
+  "license": "Apache-2.0",
+  "author": "Mkhytar Mkhoian",
+  "sideEffects": false,
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build"
+  },
+  "dependencies": {
+    "@herald-analytics/core": "^0.0.0"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

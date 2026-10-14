@@ -42,4 +42,6 @@ order matters, await the earlier call.
 ## Documentation
 
 The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
-[repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.
+[repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages:
+`@herald-analytics/log`, which prints every call for debug builds, and `@herald-analytics/testing`,
+a fake vendor for tests.

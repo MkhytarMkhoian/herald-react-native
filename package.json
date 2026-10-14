@@ -27,7 +27,10 @@
     ],
     "testMatch": [
       "**/__tests__/**/*.test.ts"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@herald-analytics/([^/]+)$": "<rootDir>/packages/$1/src"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

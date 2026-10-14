@@ -18,7 +18,8 @@ This repository is the **React Native SDK**. It is the same design as the
 [iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, written in TypeScript, over each vendor's
 official React Native package.
 
-**In development: not on npm yet.** The core is here; the vendor packages come next.
+**In development: not on npm yet.** The core, log and testing packages are here; the vendor
+packages come next.
 
 ## In 30 seconds
 
@@ -61,6 +62,8 @@ herald.track(new CheckoutStarted('pro', 3));
 | Package | What it is |
 | --- | --- |
 | [`@herald-analytics/core`](packages/core) | Events, properties and the `Herald` fan-out, in plain TypeScript. |
+| [`@herald-analytics/log`](packages/log) | Prints every call, for debug builds. |
+| [`@herald-analytics/testing`](packages/testing) | `FakeAnalyticsProvider`, a fake vendor that records events so your tests can check them. |
 
 ## Documentation
 

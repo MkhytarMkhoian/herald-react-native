@@ -4,6 +4,7 @@
   "exclude": ["src/__tests__"],
   "compilerOptions": {
     "rootDir": ".",
-    "types": []
+    "types": [],
+    "paths": {}
   }
 }
