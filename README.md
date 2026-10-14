@@ -18,8 +18,7 @@ This repository is the **React Native SDK**. It is the same design as the
 [iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, written in TypeScript, over each vendor's
 official React Native package.
 
-**In development: not on npm yet.** The core, log and testing packages are here; the vendor
-packages come next.
+**In development: not on npm yet.**
 
 ## In 30 seconds
 
@@ -62,8 +61,16 @@ herald.track(new CheckoutStarted('pro', 3));
 | Package | What it is |
 | --- | --- |
 | [`@herald-analytics/core`](packages/core) | Events, properties and the `Herald` fan-out, in plain TypeScript. |
+| [`@herald-analytics/firebase`](packages/firebase) | Sends to Firebase Analytics (GA4). |
+| [`@herald-analytics/adjust`](packages/adjust) | Sends to Adjust: events by dashboard token, purchases and ad revenue. |
+| [`@herald-analytics/mixpanel`](packages/mixpanel) | Sends to Mixpanel: events, user profile and super properties. |
+| [`@herald-analytics/appsflyer`](packages/appsflyer) | Sends to AppsFlyer: conversions, purchases, subscriptions and ad revenue. |
+| [`@herald-analytics/amplitude`](packages/amplitude) | Sends to Amplitude: events, user properties, screen views and revenue. |
 | [`@herald-analytics/log`](packages/log) | Prints every call, for debug builds. |
 | [`@herald-analytics/testing`](packages/testing) | `FakeAnalyticsProvider`, a fake vendor that records events so your tests can check them. |
+
+Each vendor package works over that vendor's official React Native package, which your app installs
+itself, so React Native links its native code.
 
 ## Documentation
 

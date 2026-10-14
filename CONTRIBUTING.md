@@ -41,3 +41,34 @@ npm run build  # what npm will receive, in each package's lib/
   can only change incompatibly in a major version. Keep helpers out of the export list.
 - **A line in `CHANGELOG.md`** under the next, unreleased version, starting with `New:`, `Fix:`,
   `Upgrade:` or `Breaking:`.
+
+## A new vendor package
+
+A new vendor gets a package of its own, shaped like the existing ones. Use `mixpanel` as the
+template, or `appsflyer` for a vendor that only takes events. A new vendor never needs a change to
+`@herald-analytics/core`.
+
+- [ ] **The package.** `packages/<vendor>`, with the vendor's React Native package as a peer
+      dependency (the app installs it, so React Native links its native code) and as a dev
+      dependency, a `LICENSE` copy, a `README.md` and the `tsconfig.build.json` every package has.
+- [ ] **The factory chain,** the same as every other vendor's, in `src/chain.ts`: the factory
+      interfaces, the composites (which call `requireFallbackLast`), the `RequireMapped` factories
+      and the tracker service. Copy it from another vendor and rename.
+- [ ] **The vendor's settings stay the app's.** The package takes a client the app has already
+      configured, and never sets keys, endpoints, data residency or log levels itself.
+- [ ] **Services.** A `<Vendor>AnalyticsTrackerService` and a `<Vendor>AnalyticsService` for
+      start-up, sign-in and consent.
+- [ ] **Factories and handlers:**
+    - [ ] a generic factory marked as a fallback (`isFallback = true`), if sending an event under its
+          own name makes sense for this vendor;
+    - [ ] one handler class for each different vendor call: `Generic<Vendor>EventTracker`,
+          `ScreenView<Vendor>EventTracker`.
+- [ ] **How consent works, backed by the vendor's own documentation.** What does a fresh install
+      send? What does `setEnabled` call? Does the vendor remember the choice across launches?
+- [ ] **Typed values.** Send numbers and booleans as themselves wherever the vendor accepts them.
+- [ ] **What a call waits for.** A handler resolves once the vendor has the call, never after an
+      upload; a refused call must reject, so Herald reports it.
+- [ ] **Tests** for every service method, factory and handler, with a recording client or, when the
+      vendor's JavaScript is a thin layer over its native module, a recorded native module.
+- [ ] **Everywhere packages are listed:** the table in `README.md`, and a vendor page in herald-docs.
+

@@ -1,0 +1,78 @@
+{
+  "name": "@herald-analytics/amplitude",
+  "version": "0.0.0",
+  "description": "Sends Herald events and properties to Amplitude: events, user properties, screen views and revenue.",
+  "keywords": [
+    "analytics",
+    "amplitude",
+    "react-native"
+  ],
+  "homepage": "https://mkhytarmkhoian.github.io/herald-docs/",
+  "bugs": "https://github.com/MkhytarMkhoian/herald-react-native/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MkhytarMkhoian/herald-react-native.git",
+    "directory": "packages/amplitude"
+  },
+  "license": "Apache-2.0",
+  "author": "Mkhytar Mkhoian",
+  "sideEffects": false,
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/typescript/module/src/index.d.ts",
+        "default": "./lib/module/index.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/index.d.ts",
+        "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__"
+  ],
+  "scripts": {
+    "build": "bob build",
+    "prepack": "bob build"
+  },
+  "dependencies": {
+    "@herald-analytics/core": "^0.0.0"
+  },
+  "peerDependencies": {
+    "@amplitude/analytics-react-native": "^1.12.0"
+  },
+  "devDependencies": {
+    "@amplitude/analytics-react-native": "1.12.2"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}
