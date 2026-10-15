@@ -68,6 +68,7 @@ herald.track(new CheckoutStarted('pro', 3));
 | [`@herald-analytics/amplitude`](packages/amplitude) | Sends to Amplitude: events, user properties, screen views and revenue. |
 | [`@herald-analytics/log`](packages/log) | Prints every call, for debug builds. |
 | [`@herald-analytics/testing`](packages/testing) | `FakeAnalyticsProvider`, a fake vendor that records events so your tests can check them. |
+| [`@herald-analytics/react`](packages/react) | Optional: tracking from screens and lists, such as screen views and impressions. |
 
 Each vendor package works over that vendor's official React Native package, which your app installs
 itself, so React Native links its native code.

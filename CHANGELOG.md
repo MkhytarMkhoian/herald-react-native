@@ -16,3 +16,7 @@ The first preview of Herald for React Native: the design of the other SDKs, in T
    `@herald-analytics/appsflyer` and `@herald-analytics/amplitude`, over
    `@react-native-firebase/analytics` 26, `react-native-adjust` 5, `mixpanel-react-native` 4,
    `react-native-appsflyer` 7 and `@amplitude/analytics-react-native` 1.
+ * New: `@herald-analytics/react`, an optional package for tracking from React Native components,
+   like Flutter's `herald_widgets`: `useTrackScreenView` and `useTrackOnScreen` track when a screen
+   of React Navigation or Expo Router is shown or hidden, `useImpressions` tracks list items once
+   they are really on screen, and `useAnalytics` gives components the tracker for taps.

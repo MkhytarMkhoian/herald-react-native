@@ -18,30 +18,60 @@
     "singleQuote": true
   },
   "jest": {
-    "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/packages"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/packages/[^/]+/lib/"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.test.ts"
-    ],
-    "moduleNameMapper": {
-      "^@herald-analytics/([^/]+)$": "<rootDir>/packages/$1/src"
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/(?!react-native-adjust/)"
+    "projects": [
+      {
+        "displayName": "packages",
+        "testEnvironment": "node",
+        "roots": [
+          "<rootDir>/packages"
+        ],
+        "testMatch": [
+          "**/__tests__/**/*.test.ts?(x)"
+        ],
+        "modulePathIgnorePatterns": [
+          "<rootDir>/packages/[^/]+/lib/"
+        ],
+        "moduleNameMapper": {
+          "^@herald-analytics/([^/]+)$": "<rootDir>/packages/$1/src"
+        },
+        "testPathIgnorePatterns": [
+          "/node_modules/",
+          "<rootDir>/packages/react/"
+        ],
+        "transformIgnorePatterns": [
+          "/node_modules/(?!react-native-adjust/)"
+        ]
+      },
+      {
+        "displayName": "react",
+        "preset": "@react-native/jest-preset",
+        "roots": [
+          "<rootDir>/packages/react"
+        ],
+        "testMatch": [
+          "**/__tests__/**/*.test.ts?(x)"
+        ],
+        "modulePathIgnorePatterns": [
+          "<rootDir>/packages/[^/]+/lib/"
+        ],
+        "moduleNameMapper": {
+          "^@herald-analytics/([^/]+)$": "<rootDir>/packages/$1/src"
+        },
+        "transformIgnorePatterns": [
+          "/node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation)/)"
+        ]
+      }
     ]
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.5.2",
+    "@react-native/babel-preset": "^0.87.1",
     "@types/node": "^24.19.2",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
     "react-native-builder-bob": "^0.43.2",

@@ -20,7 +20,8 @@
     "types": ["node"],
     "paths": {
       "@herald-analytics/*": ["./packages/*/src"]
-    }
+    },
+    "jsx": "react-jsx"
   },
   "include": ["packages/*/src"]
 }
