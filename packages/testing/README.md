@@ -5,7 +5,7 @@ and its assertions check what your code tracked. It works with any test runner: 
 throws an `AnalyticsAssertionError`.
 
 ```bash
-npm install --save-dev @herald-analytics/testing
+npm install --save-dev @herald-analytics/testing@next
 ```
 
 The examples below test this view model:

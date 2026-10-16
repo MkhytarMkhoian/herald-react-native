@@ -12,9 +12,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@herald-analytics/core": "^0.0.0",
-    "@herald-analytics/log": "^0.0.0",
-    "@herald-analytics/react": "^0.0.0",
+    "@herald-analytics/core": "^1.0.0-beta.1",
+    "@herald-analytics/log": "^1.0.0-beta.1",
+    "@herald-analytics/react": "^1.0.0-beta.1",
     "expo": "~57.0.29",
     "expo-constants": "~57.0.22",
     "expo-linking": "~57.0.13",
@@ -26,7 +26,7 @@
     "react-native-screens": "~4.26.0"
   },
   "devDependencies": {
-    "@herald-analytics/testing": "^0.0.0",
+    "@herald-analytics/testing": "^1.0.0-beta.1",
     "@testing-library/react-native": "14.1.0",
     "@types/react": "~19.2.2",
     "babel-preset-expo": "~57.0.15",

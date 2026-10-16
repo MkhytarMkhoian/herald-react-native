@@ -2,7 +2,7 @@
 
 ## Version 1.0.0-beta.1
 
-_Unreleased_
+_2026-10-16_
 
 The first preview of Herald for React Native: the design of the other SDKs, in TypeScript.
 

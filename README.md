@@ -19,7 +19,17 @@ This repository is the **React Native SDK**. It is the same design as the
 [iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, written in TypeScript, over each vendor's
 official React Native package.
 
-**In development: not on npm yet.**
+## Install
+
+Herald for React Native is in beta, under npm's `next` tag. Install the core and one package for
+each vendor you use, next to that vendor's own React Native package:
+
+```bash
+npm install @herald-analytics/core@next @herald-analytics/firebase@next
+npm install --save-dev @herald-analytics/testing@next
+```
+
+All packages share one version.
 
 ## In 30 seconds
 
