@@ -22,12 +22,18 @@ official React Native package.
 ## Install
 
 Herald for React Native is in beta, under npm's `next` tag. Install the core and one package for
-each vendor you use, next to that vendor's own React Native package:
+each vendor you use, next to that vendor's own React Native package. For Firebase:
 
 ```bash
+npx expo install @react-native-firebase/app @react-native-firebase/analytics
 npm install @herald-analytics/core@next @herald-analytics/firebase@next
 npm install --save-dev @herald-analytics/testing@next
 ```
+
+Install the vendor's package yourself, as on the first line. npm would bring it in on its own, but
+without adding it to your `package.json`, and React Native only links the native code of packages
+listed there. Each vendor package's README gives its install line. Without Expo, use
+`npm install` for the vendor's package too.
 
 All packages share one version.
 

@@ -4,6 +4,14 @@ Sends Herald events and properties to Amplitude, over
 [`@amplitude/analytics-react-native`](https://www.npmjs.com/package/@amplitude/analytics-react-native):
 events, user properties, screen views and revenue.
 
+```bash
+npx expo install @amplitude/analytics-react-native @react-native-async-storage/async-storage
+npm install @herald-analytics/core@next @herald-analytics/amplitude@next
+```
+
+Install the vendor's package yourself, as on the first line, so React Native links its native
+code. Then follow its own setup guide.
+
 ```ts
 import * as amplitude from '@amplitude/analytics-react-native';
 

@@ -4,6 +4,14 @@ Sends Herald events and properties to Mixpanel, over
 [`mixpanel-react-native`](https://www.npmjs.com/package/mixpanel-react-native) 4: events, the
 People profile and super properties.
 
+```bash
+npx expo install mixpanel-react-native
+npm install @herald-analytics/core@next @herald-analytics/mixpanel@next
+```
+
+Install the vendor's package yourself, as on the first line, so React Native links its native
+code. Then follow its own setup guide.
+
 ```ts
 import { Mixpanel } from 'mixpanel-react-native';
 

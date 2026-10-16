@@ -3,6 +3,14 @@
 Sends Herald events to Adjust, over [`react-native-adjust`](https://www.npmjs.com/package/react-native-adjust)
 5: events by dashboard token, purchases and ad revenue.
 
+```bash
+npx expo install react-native-adjust
+npm install @herald-analytics/core@next @herald-analytics/adjust@next
+```
+
+Install the vendor's package yourself, as on the first line, so React Native links its native
+code. Then follow its own setup guide.
+
 ```ts
 import { AdjustConfig } from 'react-native-adjust';
 
