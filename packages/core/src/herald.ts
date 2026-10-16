@@ -29,19 +29,7 @@ export interface HeraldProviderOptions {
   readonly consent?: ConsentService;
 }
 
-/**
- * One vendor: a name and the capabilities it has.
- *
- * An adapter with several capabilities is passed under each. `name` shows up in failure reports,
- * so pick one you'll recognise.
- *
- * To skip or sample events for one vendor, wrap its capability in a decorator, like the one shown
- * on {@link EventTrackerService}:
- *
- * ```ts
- * new HeraldProvider({ name: 'attribution', events: new ExceptPersonalDataTracker(attribution) })
- * ```
- */
+/** One vendor: a name, which failure reports show, and the capabilities it has. */
 export class HeraldProvider {
   readonly name: string;
   readonly events?: EventTrackerService;
@@ -81,45 +69,12 @@ export interface HeraldOptions {
 }
 
 /**
- * Sends each call to every vendor.
- *
- * It implements all five capabilities. Give your classes the interface they need, such as
+ * Sends each call to every vendor at once. Give your classes the interface they need, such as
  * {@link EventTrackerService}, not `Herald` itself.
  *
- * ```ts
- * const herald = new Herald({
- *   providers: [
- *     new HeraldProvider({
- *       name: 'analytics',
- *       events: analyticsTracker,
- *       properties: analyticsTracker,
- *       identity: analyticsService,
- *       lifecycle: analyticsService,
- *       consent: analyticsService,
- *     }),
- *     new HeraldProvider({ name: 'attribution', events: attributionTracker }),
- *   ],
- *   errorReporter: (failure) => crashReporter.record(failure.error, `${failure}`),
- * });
- * ```
- *
- * ## Order
- *
- * A call starts right away and reaches every vendor at once. Its promise settles when every vendor
- * has handled it. Calls don't wait for each other, so when order matters, such as turning
- * collection off before tracking, await the earlier call:
- *
- * ```ts
- * await herald.setEnabled(false);
- * await herald.track(event);
- * ```
- *
- * ## Failures
- *
- * If a vendor throws, the others still run. Failures go to the error reporter after all vendors are
- * done, in registration order. A call on `Herald` itself never fails, so it's safe not to await it.
- *
- * Every provider needs its own name; a repeated name throws.
+ * Calls don't wait for each other: when order matters, await the earlier call. A call never fails.
+ * If a vendor throws, the others still run, and the error goes to the error reporter. Two providers
+ * with the same name throw.
  */
 export class Herald
   implements
@@ -203,10 +158,7 @@ export class Herald
     );
   }
 
-  /**
-   * Calls every provider that has the capability at once, then reports what failed, in
-   * registration order. Providers without it are skipped.
-   */
+  /** Calls every provider that has the capability, then reports failures in registration order. */
   private async send<S>(
     operation: AnalyticsOperation,
     capability: (provider: HeraldProvider) => S | undefined,
@@ -223,16 +175,15 @@ export class Herald
     if (reporter === undefined) return;
     for (const failure of outcomes) {
       if (failure === undefined) continue;
-      // A failing reporter has nowhere to report to, whether it throws or its promise fails.
+      // A failing reporter has nowhere to report to, so it's ignored.
       try {
         Promise.resolve(reporter(failure)).catch(() => {});
       } catch {
-        // ignored, as above
+        // ignored
       }
     }
   }
 
-  /** Runs `call` for `provider`, turning anything it throws into a failure. */
   private async run(
     provider: HeraldProvider,
     operation: AnalyticsOperation,

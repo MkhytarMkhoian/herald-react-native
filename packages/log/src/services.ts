@@ -18,10 +18,7 @@ export interface LogAnalyticsTrackerServiceOptions {
   readonly propertySetterFactory: LogPropertySetterFactory;
 }
 
-/**
- * Sends events and properties to the log, as its factory chains decide. The calls for one event run
- * in order, and if one fails the rest don't run. Anything no factory claims isn't sent.
- */
+/** Sends events and properties to the log, as its factory chains decide. */
 export class LogAnalyticsTrackerService implements EventTrackerService, PropertyTrackerService {
   private readonly eventTrackerFactory: LogEventTrackerFactory;
   private readonly propertySetterFactory: LogPropertySetterFactory;
@@ -45,12 +42,8 @@ export class LogAnalyticsTrackerService implements EventTrackerService, Property
 }
 
 /**
- * Prints the calls that are not events or properties, so the log shows the whole story: whether
- * consent was ever granted, whether `identify` ran before the first event, whether `reset` fired on
- * sign-out.
- *
- * The user id is printed as-is. That is the point in a debug build and a leak in a release one, so
- * register this provider in debug builds only, as the rest of the log adapter.
+ * Prints the calls that aren't events or properties: start, consent, sign-in and sign-out. It
+ * prints the user id as-is, so use it in debug builds only.
  */
 export class LogAnalyticsService
   implements IdentifiableUserService, AnalyticsLifecycleService, ConsentService

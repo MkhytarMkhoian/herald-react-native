@@ -23,10 +23,7 @@ import {
 } from './analytics-record';
 import { describeParameters, describeValue, sameValue } from './describe';
 
-/**
- * What a failed assertion throws. Its message says what was expected and lists everything the fake
- * recorded. Any test runner shows it as a failure.
- */
+/** What a failed assertion throws. Its message lists everything the fake recorded. */
 export class AnalyticsAssertionError extends Error {
   constructor(message: string) {
     super(message);
@@ -37,23 +34,8 @@ export class AnalyticsAssertionError extends Error {
 type Fail = (message: string) => never;
 
 /**
- * A vendor that records calls instead of sending them, for tests.
- *
- * It has all five capabilities. Register it with a real `Herald`, so the test also runs your setup,
- * or pass it straight to the class under test:
- *
- * ```ts
- * const analytics = new FakeAnalyticsProvider();
- * const herald = new Herald({
- *   providers: [new HeraldProvider({ name: 'test', events: analytics, properties: analytics })],
- * });
- *
- * await viewModel.onPayTapped();
- *
- * analytics
- *   .assertTracked('checkout_pay_tapped', (event) => event.param('plan', 'pro'))
- *   .assertNothingElseTracked();
- * ```
+ * A vendor that records calls instead of sending them, for tests. Register it with a real
+ * `Herald`, or pass it straight to the class under test.
  */
 export class FakeAnalyticsProvider
   implements
@@ -66,7 +48,7 @@ export class FakeAnalyticsProvider
   private readonly recorded: AnalyticsRecord[] = [];
   private readonly accountedFor = new Set<number>();
 
-  /** Everything received, oldest first. Later calls don't change this list. */
+  /** Everything received, oldest first. */
   get records(): readonly AnalyticsRecord[] {
     return Object.freeze([...this.recorded]);
   }
@@ -116,16 +98,8 @@ export class FakeAnalyticsProvider
   }
 
   /**
-   * Asserts that exactly one event called `name` was tracked, then runs `assertions` on it.
-   *
-   * Exactly one, so a duplicated event fails instead of passing. Use
-   * {@link FakeAnalyticsProvider.assertTrackedTimes} when repeats are expected.
-   *
-   * ```ts
-   * analytics.assertTracked('checkout_started', (event) =>
-   *   event.param('plan', 'pro').param('seats', int(3)),
-   * );
-   * ```
+   * Asserts that exactly one event called `name` was tracked, so a duplicate fails, then runs
+   * `assertions` on it. Use {@link FakeAnalyticsProvider.assertTrackedTimes} for repeats.
    */
   assertTracked(name: string, assertions?: (event: TrackedEventAssert) => void): this {
     const matches = this.trackedNamed(name);
@@ -167,10 +141,7 @@ export class FakeAnalyticsProvider
     return this;
   }
 
-  /**
-   * Asserts that every tracked event was already checked by an earlier assertion, so an unexpected
-   * event, such as a duplicate, doesn't go unnoticed.
-   */
+  /** Asserts that every tracked event was checked by an earlier assertion. */
   assertNothingElseTracked(): this {
     const unexpected = this.tracked()
       .filter(({ index }) => !this.accountedFor.has(index))
@@ -180,11 +151,8 @@ export class FakeAnalyticsProvider
   }
 
   /**
-   * Asserts that the property `name` currently has `value`, meaning the last value it was set to.
-   * If it had the right value and was then overwritten, this fails and shows every value.
-   *
-   * `value` is written as in the property, and compared by type too, so `int(3)` fails against the
-   * text `'3'`.
+   * Asserts that the last value set for the property `name` is `value`. Types count: `int(3)`
+   * fails against `'3'`.
    */
   assertPropertySet(name: string, value: AnalyticsInput): this {
     const expected = AnalyticsValue.from(value);
@@ -203,10 +171,7 @@ export class FakeAnalyticsProvider
     return this;
   }
 
-  /**
-   * Asserts that the user was identified as `userId` at some point, even if `reset` came later. Use
-   * `records` to check the order.
-   */
+  /** Asserts that the user was identified as `userId` at some point, even if `reset` came later. */
   assertIdentified(userId: string): this {
     const identified = this.recorded.filter((record) => record instanceof IdentifiedRecord);
     if (!identified.some((record) => record.identity.userId === userId)) {
@@ -248,12 +213,7 @@ export class TrackedEventAssert {
     return this.record.event;
   }
 
-  /**
-   * Asserts that the event has the parameter `key` with `value`.
-   *
-   * `value` is written as in the event, and compared by type too, so `int(3)` fails against the
-   * text `'3'`.
-   */
+  /** Asserts that the event has the parameter `key` with `value`. `int(3)` fails against `'3'`. */
   param(key: string, value: AnalyticsInput): this {
     const expected = AnalyticsValue.from(value);
     const parameters = this.record.parameters;

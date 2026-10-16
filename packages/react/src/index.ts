@@ -1,6 +1,6 @@
 /**
- * Track Herald events from React Native screens and lists, with React Navigation. For Expo Router,
- * import from `@herald-analytics/react/expo-router`. See the package README for the setup.
+ * Tracks Herald events from screens and lists, with React Navigation. With Expo Router, import from
+ * `@herald-analytics/react/expo-router`.
  *
  * @packageDocumentation
  */

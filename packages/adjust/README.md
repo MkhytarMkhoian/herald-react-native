@@ -30,20 +30,17 @@ const service = new AdjustAnalyticsService(
 );
 ```
 
-Events are matched by class, not by name, so the compiler checks the list, and renaming an event
-can't quietly stop it reaching Adjust.
+Events are matched by class, not by name, so a renamed event keeps its token.
 
-**Adjust starts silent.** `start()` turns Adjust off and only then starts it, so nothing is sent
-until `setEnabled(true)`. Let the service start Adjust; don't call `Adjust.initSdk` yourself.
+**Adjust starts silent.** `start()` turns Adjust off, then starts it, so nothing is sent until
+`setEnabled(true)`. Let Herald start Adjust: don't call `Adjust.initSdk` yourself.
 
-Adjust's calls return nothing, so Herald can't report a failure that happens in the native SDK.
+Adjust's calls return nothing, so Herald can't see a failure in the native SDK.
 
-Purchases go through `AdjustRevenueEvent` and `RevenueAdjustEventTracker`, ad revenue through
-`AdjustAdRevenueEvent` and `AdRevenueAdjustEventTracker`. Your factory builds them from your own
-events.
+Purchases go through `AdjustRevenueEvent` and `RevenueAdjustEventTracker`, and ad revenue through
+`AdjustAdRevenueEvent` and `AdRevenueAdjustEventTracker`.
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

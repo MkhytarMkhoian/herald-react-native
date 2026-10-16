@@ -1,6 +1,5 @@
 /**
  * Sends Herald events and properties to Mixpanel: events, the People profile and super properties.
- * See the package README for the setup.
  *
  * @packageDocumentation
  */

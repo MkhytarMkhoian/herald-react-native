@@ -1,8 +1,6 @@
 /**
- * Herald: one analytics vocabulary, heard by every vendor.
- *
- * Your app describes what happened as an {@link Event}, and {@link Herald} sends it to every
- * analytics service you use. Each vendor's adapter lives in its own package.
+ * Events, properties and {@link Herald}, which sends them to every analytics service you use. Each
+ * vendor has its own package.
  *
  * @packageDocumentation
  */

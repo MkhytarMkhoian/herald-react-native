@@ -1,6 +1,5 @@
 /**
- * Sends Herald events to AppsFlyer: conversions, purchases, subscriptions and ad revenue. See the
- * package README for the setup.
+ * Sends Herald events to AppsFlyer: conversions, purchases, subscriptions and ad revenue.
  *
  * @packageDocumentation
  */

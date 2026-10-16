@@ -9,8 +9,7 @@ import * as expoRouterEntry from '../expo-router';
 import { HeraldScope, useTrackOnScreen, useTrackScreenView } from '../expo-router';
 import { TestEvent, TestScreenView, fakeAppState, tracked } from './support';
 
-// Expo Router's own focus, played by a switch the test turns. The example app tests the entry with
-// the real Expo Router.
+// Expo Router's focus, as a switch the test turns. The example app tests the real Expo Router.
 const mockFocus = { focused: true, listeners: new Set<() => void>() };
 jest.mock('expo-router', () => ({
   useIsFocused: () =>

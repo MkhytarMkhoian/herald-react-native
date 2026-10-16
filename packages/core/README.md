@@ -1,7 +1,7 @@
 # Herald core
 
-Events, properties and the `Herald` fan-out: the core of Herald for React Native, in plain
-TypeScript, with no vendor SDK. Vendors are separate packages.
+The core of Herald for React Native: events, properties, and `Herald`, which sends them to every
+vendor. It uses no vendor SDK: each vendor has its own package.
 
 ```ts
 class CheckoutStarted implements Event {
@@ -28,16 +28,14 @@ const herald = new Herald({
 herald.track(new CheckoutStarted('pro', 3));
 ```
 
-A number says whether it is whole, with `int(…)` or `double(…)`, because JavaScript can't tell `3`
-from `3.0`. A bare number doesn't compile.
+A number is written `int(…)` or `double(…)`, because JavaScript can't tell `3` from `3.0`. A bare
+number doesn't compile.
 
-`Herald` implements all five capabilities — `EventTrackerService`, `PropertyTrackerService`,
-`IdentifiableUserService`, `AnalyticsLifecycleService` and `ConsentService` — so give your classes
-the one interface they use.
+Give each class only the interface it uses, such as `EventTrackerService`, and pass `Herald` as
+that.
 
-Each call runs against every vendor at once, and a failing vendor is reported without stopping the
-others. A call never fails, so it's safe not to await it. Calls don't wait for each other, so when
-order matters, await the earlier call.
+A call reaches every vendor at once. If one vendor fails, the others still run, and the error goes
+to your error reporter. Calls don't wait for each other: when order matters, await the first.
 
 ## Documentation
 

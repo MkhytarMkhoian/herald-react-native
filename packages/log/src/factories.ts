@@ -18,10 +18,7 @@ import {
   type LogPropertySetter,
 } from './handlers';
 
-/**
- * Decides what the log gets for an event: claimed with the calls to make, dropped to send nothing,
- * or declined to let the next factory decide.
- */
+/** Decides what the log prints for an event. */
 export interface LogEventTrackerFactory {
   create(event: Event): Resolution<LogEventTracker>;
 }
@@ -30,10 +27,7 @@ export interface LogPropertySetterFactory {
   create(property: Property): Resolution<LogPropertySetter>;
 }
 
-/**
- * Asks each factory in order and uses the first answer that isn't a decline. If all decline,
- * nothing is sent. Throws if a fallback factory isn't last.
- */
+/** Asks each factory in order and uses the first that answers. Throws if a fallback isn't last. */
 export class CompositeLogEventTrackerFactory implements LogEventTrackerFactory {
   private readonly factories: readonly LogEventTrackerFactory[];
 
@@ -75,7 +69,7 @@ export class GenericLogEventTrackerFactory implements LogEventTrackerFactory, Fa
   }
 }
 
-/** Claims every screen view and prints it as a screen record. Declines everything else. */
+/** Prints every screen view as a screen record. */
 export class ScreenViewLogEventTrackerFactory implements LogEventTrackerFactory {
   constructor(private readonly logger: AnalyticsLogger) {}
 
@@ -99,10 +93,7 @@ export class GenericLogPropertySetterFactory implements LogPropertySetterFactory
   }
 }
 
-/**
- * Fails for any event that reaches it, so the error reporter shows events nobody mapped. Put it
- * last in a chain.
- */
+/** Fails for any event that reaches it, so the error reporter shows events nobody mapped. */
 export class RequireMappedLogEventTrackerFactory
   implements LogEventTrackerFactory, FallbackFactory
 {

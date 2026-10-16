@@ -16,10 +16,7 @@ import {
   type FirebasePropertySetter,
 } from './handlers';
 
-/**
- * Logs any event under its own name, with its parameters. Claims every event, so it goes last in a
- * chain.
- */
+/** Logs any event under its own name. It claims everything, so it goes last in a chain. */
 export class GenericFirebaseEventTrackerFactory
   implements FirebaseEventTrackerFactory, FallbackFactory
 {
@@ -36,13 +33,7 @@ export class GenericFirebaseEventTrackerFactory
   }
 }
 
-/**
- * Claims every screen view and declines everything else.
- *
- * GA4 records a screen view as its own `screen_view` event, with the screen name as a parameter, so
- * screen views can't go through the generic factory. To send them differently, put your own factory
- * before this one.
- */
+/** Sends every screen view as GA4's own `screen_view` event. */
 export class ScreenViewFirebaseEventTrackerFactory implements FirebaseEventTrackerFactory {
   constructor(private readonly analytics: Analytics) {}
 
@@ -53,8 +44,8 @@ export class ScreenViewFirebaseEventTrackerFactory implements FirebaseEventTrack
 }
 
 /**
- * Sets any property as a Firebase user property, user properties included: Firebase has one kind
- * of property. Claims every property, so it goes last in a chain.
+ * Sets any property as a Firebase user property, since Firebase has one kind. It claims everything,
+ * so it goes last in a chain.
  */
 export class GenericFirebasePropertySetterFactory
   implements FirebasePropertySetterFactory, FallbackFactory

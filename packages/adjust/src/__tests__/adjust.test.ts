@@ -31,8 +31,8 @@ import {
 } from '../index';
 import { TestEvent, TestProperty } from './support';
 
-// Adjust's real JavaScript runs; only its native module is replaced, by one that records each call
-// as [method, ...arguments], like a recorded channel in the Flutter tests.
+// Adjust's real JavaScript runs. Only its native module is replaced, by one that records each call
+// as [method, ...arguments].
 const sent: unknown[][] = [];
 
 jest.mock('react-native', () => {

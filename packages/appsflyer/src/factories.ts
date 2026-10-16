@@ -5,11 +5,8 @@ import { GenericAppsFlyerEventTracker, type AppsFlyerEventTracker } from './hand
 import type { AppsFlyerClient } from './values';
 
 /**
- * Logs any event under its own name with its parameters. Claims everything, so it belongs last in
- * a chain.
- *
- * Most apps leave it out: AppsFlyer is for conversions, each one chosen on purpose, so a chain
- * without a fallback, where only the events a factory handles are sent, is the usual setup.
+ * Logs any event under its own name. It claims everything, so it goes last in a chain. Most apps
+ * leave it out and send AppsFlyer only their chosen conversions.
  */
 export class GenericAppsFlyerEventTrackerFactory
   implements AppsFlyerEventTrackerFactory, FallbackFactory

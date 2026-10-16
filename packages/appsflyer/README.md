@@ -34,39 +34,33 @@ const provider = new HeraldProvider({
 });
 ```
 
-**AppsFlyer starts on consent.** `start()` stops the SDK, and `setEnabled(true)` resumes and
-starts it. AppsFlyer forgets the stopped state and the customer user id between launches, so call
-`identify` and then `setEnabled` with the stored answer on every cold start.
+**AppsFlyer starts on consent.** `start()` stops it, and `setEnabled(true)` starts it. AppsFlyer
+forgets both the stop and the user id between launches, so on every launch call `identify`, then
+`setEnabled` with the stored answer.
 
 Purchases go through `AppsFlyerPurchaseEvent` (`af_purchase`), subscriptions through
-`AppsFlyerSubscribeEvent` (`af_subscribe`) and ad revenue through `AppsFlyerAdRevenueEvent`.
-A call settles once AppsFlyer has queued the event, and a refused call reaches Herald's error
-reporter.
+`AppsFlyerSubscribeEvent` (`af_subscribe`), and ad revenue through `AppsFlyerAdRevenueEvent`.
 
 ## Type checking
 
-`react-native-appsflyer` 7 ships its TypeScript source, so a strict `tsc` in your app reports an
-error inside it as soon as one of your files imports it, with or without Herald. Without Jest's
-types, then with them:
+`react-native-appsflyer` 7 ships its TypeScript source, so `tsc` in your app reports an error inside
+it, with or without Herald. One of these:
 
 ```
 node_modules/react-native-appsflyer/index.ts: error TS2304: Cannot find name 'jest'.
 node_modules/react-native-appsflyer/index.ts: error TS2708: Cannot use namespace 'jest' as a value.
 ```
 
-`skipLibCheck` doesn't cover `.ts` files. Declare the name it checks for, in a `.d.ts` file of your
-app:
+`skipLibCheck` doesn't help with `.ts` files. Add this to a `.d.ts` file in your app:
 
 ```ts
 // react-native-appsflyer checks for Jest with `typeof jest`.
 declare let jest: unknown;
 ```
 
-Herald itself never imports it: it describes the AppsFlyer calls it makes with its own
-`AppsFlyerClient` type.
+Herald itself doesn't import it: it has its own `AppsFlyerClient` type.
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

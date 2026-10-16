@@ -20,12 +20,7 @@ export interface FirebasePropertySetter {
   set(): Promise<void>;
 }
 
-/**
- * Logs the event under its own name, with its parameters.
- *
- * Firebase checks the name right away, so a reserved or badly formed name fails here. Firebase
- * doesn't report what happens after that.
- */
+/** Logs the event under its own name. Firebase refuses a reserved or badly formed name. */
 export class GenericFirebaseEventTracker implements FirebaseEventTracker {
   constructor(
     readonly event: Event,
@@ -38,10 +33,8 @@ export class GenericFirebaseEventTracker implements FirebaseEventTracker {
 }
 
 /**
- * Logs the event as GA4's `screen_view`, with its name as `screen_name`.
- *
- * Throws if the event has its own `screen_name` parameter, because it would replace the screen's
- * name.
+ * Logs the event as GA4's `screen_view`, with its name as `screen_name`. Throws if the event has
+ * its own `screen_name` parameter.
  */
 export class ScreenViewFirebaseEventTracker implements FirebaseEventTracker {
   constructor(
@@ -61,10 +54,7 @@ export class ScreenViewFirebaseEventTracker implements FirebaseEventTracker {
   }
 }
 
-/**
- * Sets the property as a Firebase user property. Firebase user properties are text only, so the
- * value is written in its string form.
- */
+/** Sets the property as a Firebase user property, as text: Firebase takes only text there. */
 export class GenericFirebasePropertySetter implements FirebasePropertySetter {
   constructor(
     readonly property: Property,

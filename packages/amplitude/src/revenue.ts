@@ -30,12 +30,8 @@ export interface AmplitudeRevenueEventOptions {
 }
 
 /**
- * A purchase, in the fields Amplitude's revenue API takes.
- *
- * Your events don't extend it: your Amplitude factory builds one from your event and sends it with
- * `RevenueAmplitudeEventTracker`.
- *
- * Throws for a quantity that isn't whole, or a price or total that isn't a finite number.
+ * A purchase, in Amplitude's revenue fields. Your factory builds one from your event and sends it
+ * with `RevenueAmplitudeEventTracker`. Throws for a bad number.
  */
 export class AmplitudeRevenueEvent implements Event {
   readonly name: string;
@@ -52,7 +48,7 @@ export class AmplitudeRevenueEvent implements Event {
 
   constructor(options: AmplitudeRevenueEventOptions) {
     const quantity = options.quantity ?? 1;
-    // Called for their checks only: they throw for a wrong number.
+    // Only to check the numbers: they throw for a bad one.
     double(options.price);
     int(quantity);
     if (options.revenue !== undefined) double(options.revenue);
@@ -69,10 +65,7 @@ export class AmplitudeRevenueEvent implements Event {
     this.parameters = options.parameters ?? {};
   }
 
-  /**
-   * This purchase as Amplitude's `Revenue`. `insertId` isn't in it: the tracker sends it as an
-   * event option.
-   */
+  /** This purchase as Amplitude's `Revenue`, without `insertId`, which has no field there. */
   toAmplitudeRevenue(): Revenue {
     const revenue = new Revenue().setPrice(this.price).setQuantity(this.quantity);
     if (this.productId !== undefined) revenue.setProductId(this.productId);

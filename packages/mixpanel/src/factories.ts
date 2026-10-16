@@ -18,10 +18,7 @@ import {
   type MixpanelPropertySetter,
 } from './handlers';
 
-/**
- * Tracks any event under its own name, with its parameters. Claims every event, so it goes last in
- * a chain.
- */
+/** Tracks any event under its own name. It claims everything, so it goes last in a chain. */
 export class GenericMixpanelEventTrackerFactory
   implements MixpanelEventTrackerFactory, FallbackFactory
 {
@@ -38,10 +35,7 @@ export class GenericMixpanelEventTrackerFactory
   }
 }
 
-/**
- * Claims every screen view as a `screen_view` event and declines everything else. To send screen
- * views differently, put your own factory before this one.
- */
+/** Sends every screen view as a `screen_view` event. */
 export class ScreenViewMixpanelEventTrackerFactory implements MixpanelEventTrackerFactory {
   constructor(private readonly mixpanel: Mixpanel) {}
 
@@ -52,10 +46,8 @@ export class ScreenViewMixpanelEventTrackerFactory implements MixpanelEventTrack
 }
 
 /**
- * Claims every user property for the People profile and declines everything else.
- *
- * Put it before {@link GenericMixpanelPropertySetterFactory}: a user property is also a property, so
- * the generic factory would take it first and the profile would never be written.
+ * Sets every user property on the People profile. Put it before
+ * {@link GenericMixpanelPropertySetterFactory}, or that one takes user properties first.
  */
 export class UserPropertyMixpanelPropertySetterFactory implements MixpanelPropertySetterFactory {
   constructor(private readonly mixpanel: Mixpanel) {}
@@ -66,7 +58,7 @@ export class UserPropertyMixpanelPropertySetterFactory implements MixpanelProper
   }
 }
 
-/** Sends every property as a super property. Put it last in the chain. */
+/** Sends every property as a super property. It goes last in a chain. */
 export class GenericMixpanelPropertySetterFactory
   implements MixpanelPropertySetterFactory, FallbackFactory
 {

@@ -10,8 +10,7 @@ import {
 import type { AmplitudeRevenueEvent } from './revenue';
 import { toAmplitudeProperties, type AmplitudeClient } from './values';
 
-// Amplitude reports how an upload went later, through its own logger. Herald doesn't wait for the
-// upload, as on the other platforms: a call is done once Amplitude has the event.
+// A call is done once Amplitude has the event. Herald doesn't wait for the upload.
 
 /** One call to Amplitude for one event. A factory builds it. */
 export interface AmplitudeEventTracker {
@@ -38,14 +37,9 @@ const screenViewedEvent = '[Amplitude] Screen Viewed';
 const screenNameProperty = '[Amplitude] Screen Name';
 
 /**
- * Tracks the event as Amplitude's own `[Amplitude] Screen Viewed`, with its name as
- * `[Amplitude] Screen Name`.
- *
- * Don't also send Amplitude's own screen views (`trackScreenView` or
- * `trackScreenViewOnNavigationStateChange`), or every screen is counted twice.
- *
- * Throws if the event has its own `[Amplitude] Screen Name` parameter, because it would replace the
- * screen's name.
+ * Tracks the event as `[Amplitude] Screen Viewed`, with its name as `[Amplitude] Screen Name`.
+ * Throws if the event has its own `[Amplitude] Screen Name` parameter. Don't also track screens
+ * with Amplitude itself, or each one counts twice.
  */
 export class ScreenViewAmplitudeEventTracker implements AmplitudeEventTracker {
   constructor(
@@ -68,10 +62,7 @@ export class ScreenViewAmplitudeEventTracker implements AmplitudeEventTracker {
   }
 }
 
-/**
- * Sends the event through Amplitude's revenue API. Its `insertId` goes as an event option, since
- * Amplitude's revenue type has no field for it.
- */
+/** Sends the event through Amplitude's revenue API. */
 export class RevenueAmplitudeEventTracker implements AmplitudeEventTracker {
   constructor(
     readonly event: AmplitudeRevenueEvent,

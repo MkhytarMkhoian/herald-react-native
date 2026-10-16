@@ -9,9 +9,8 @@ import {
 
 import { describeParameters } from './describe';
 
-// One call the fake received. All calls go into one list, in order, so a test can check the order
-// across kinds, such as a property set before the event that should carry it. Each record has a
-// `kind`, so `toEqual` tells them apart, and prints as the line a failure shows.
+// One call the fake received. All calls go into one list, so a test can check their order. The
+// `kind` field lets `toEqual` tell records apart.
 
 export class TrackedRecord {
   readonly kind = 'tracked';

@@ -1,6 +1,3 @@
-// The factory chain, the same for every vendor: factory interfaces, composites, the
-// RequireMapped factories and the tracker service.
-
 import {
   Resolution,
   UnhandledEventError,
@@ -15,10 +12,7 @@ import {
 
 import type { AdjustEventTracker, AdjustPropertySetter } from './handlers';
 
-/**
- * Decides what Adjust gets for an event: claimed with the calls to make, dropped to send nothing,
- * or declined to let the next factory decide.
- */
+/** Decides what Adjust gets for an event. */
 export interface AdjustEventTrackerFactory {
   create(event: Event): Resolution<AdjustEventTracker>;
 }
@@ -27,10 +21,7 @@ export interface AdjustPropertySetterFactory {
   create(property: Property): Resolution<AdjustPropertySetter>;
 }
 
-/**
- * Asks each factory in order and uses the first answer that isn't a decline. If all decline,
- * nothing is sent. Throws if a fallback factory isn't last.
- */
+/** Asks each factory in order and uses the first that answers. Throws if a fallback isn't last. */
 export class CompositeAdjustEventTrackerFactory implements AdjustEventTrackerFactory {
   private readonly factories: readonly AdjustEventTrackerFactory[];
 
@@ -58,10 +49,7 @@ export class CompositeAdjustPropertySetterFactory implements AdjustPropertySette
   }
 }
 
-/**
- * Fails for any event that reaches it, so the error reporter shows events nobody mapped. Put it
- * last in a chain.
- */
+/** Fails for any event that reaches it, so the error reporter shows events nobody mapped. */
 export class RequireMappedAdjustEventTrackerFactory
   implements AdjustEventTrackerFactory, FallbackFactory
 {
@@ -95,10 +83,7 @@ export interface AdjustAnalyticsTrackerServiceOptions {
   readonly propertySetterFactory: AdjustPropertySetterFactory;
 }
 
-/**
- * Sends events and properties to Adjust, as its factory chains decide. The calls for one event
- * run in order, and if one fails the rest don't run. Anything no factory claims isn't sent.
- */
+/** Sends events and properties to Adjust, as its factory chains decide. */
 export class AdjustAnalyticsTrackerService implements EventTrackerService, PropertyTrackerService {
   private readonly eventTrackerFactory: AdjustEventTrackerFactory;
   private readonly propertySetterFactory: AdjustPropertySetterFactory;

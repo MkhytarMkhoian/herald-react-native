@@ -1,6 +1,3 @@
-// The factory chain, the same for every vendor: factory interfaces, composites, the
-// RequireMapped factories and the tracker service.
-
 import {
   Resolution,
   UnhandledEventError,
@@ -15,10 +12,7 @@ import {
 
 import type { FirebaseEventTracker, FirebasePropertySetter } from './handlers';
 
-/**
- * Decides what Firebase gets for an event: claimed with the calls to make, dropped to send nothing,
- * or declined to let the next factory decide.
- */
+/** Decides what Firebase gets for an event. */
 export interface FirebaseEventTrackerFactory {
   create(event: Event): Resolution<FirebaseEventTracker>;
 }
@@ -27,10 +21,7 @@ export interface FirebasePropertySetterFactory {
   create(property: Property): Resolution<FirebasePropertySetter>;
 }
 
-/**
- * Asks each factory in order and uses the first answer that isn't a decline. If all decline,
- * nothing is sent. Throws if a fallback factory isn't last.
- */
+/** Asks each factory in order and uses the first that answers. Throws if a fallback isn't last. */
 export class CompositeFirebaseEventTrackerFactory implements FirebaseEventTrackerFactory {
   private readonly factories: readonly FirebaseEventTrackerFactory[];
 
@@ -58,10 +49,7 @@ export class CompositeFirebasePropertySetterFactory implements FirebasePropertyS
   }
 }
 
-/**
- * Fails for any event that reaches it, so the error reporter shows events nobody mapped. Put it
- * last in a chain.
- */
+/** Fails for any event that reaches it, so the error reporter shows events nobody mapped. */
 export class RequireMappedFirebaseEventTrackerFactory
   implements FirebaseEventTrackerFactory, FallbackFactory
 {
@@ -95,10 +83,7 @@ export interface FirebaseAnalyticsTrackerServiceOptions {
   readonly propertySetterFactory: FirebasePropertySetterFactory;
 }
 
-/**
- * Sends events and properties to Firebase, as its factory chains decide. The calls for one event
- * run in order, and if one fails the rest don't run. Anything no factory claims isn't sent.
- */
+/** Sends events and properties to Firebase, as its factory chains decide. */
 export class FirebaseAnalyticsTrackerService
   implements EventTrackerService, PropertyTrackerService
 {

@@ -13,11 +13,11 @@ Herald is an analytics library for mobile apps. Your app describes what happened
 Herald sends that event to every analytics service you use: Firebase, Adjust, Mixpanel, AppsFlyer,
 Amplitude, or one you build yourself.
 
-This repository is the **React Native SDK**. It is the same design as the
+This repository is the **React Native SDK**, in TypeScript. It works like the
 [Android](https://github.com/MkhytarMkhoian/herald),
 [Flutter](https://github.com/MkhytarMkhoian/herald-flutter) and
-[iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, written in TypeScript, over each vendor's
-official React Native package.
+[iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, over each vendor's official React Native
+package.
 
 ## Install
 
@@ -30,10 +30,8 @@ npm install @herald-analytics/core @herald-analytics/firebase
 npm install --save-dev @herald-analytics/testing
 ```
 
-Install the vendor's package yourself, as on the first line. npm would bring it in on its own, but
-without adding it to your `package.json`, and React Native only links the native code of packages
-listed there. Each vendor package's README gives its install line. Without Expo, use
-`npm install` for the vendor's package too.
+Install the vendor's own package yourself, as on the first line: React Native only links native
+code for packages listed in your `package.json`. Without Expo, use `npm install` for it too.
 
 All packages share one version.
 
@@ -106,30 +104,25 @@ against these vendor packages:
 | `react-native-adjust` | 5.8 or newer |
 | `react-native-appsflyer` | 7 |
 
-Each vendor package allows newer versions of its SDK within the same major version. A new major
-version of an SDK may need a Herald release. `@herald-analytics/react` works with React Navigation 7
-and Expo Router 57 or newer.
+Newer versions of an SDK work within the same major version. `@herald-analytics/react` works with
+React Navigation 7 and Expo Router 57 or newer.
 <!-- --8<-- [end:compatibility] -->
 
 ## TypeScript specifics
 
 <!-- --8<-- [start:differences] -->
-Herald's concepts are the same on every platform. Where TypeScript differs, the API follows it:
+Herald works the same on every platform. Where TypeScript differs:
 
-- **A number says its type.** JavaScript can't tell `3` from `3.0`, so a number is written
-  `int(3)` or `double(9.99)`. A bare number doesn't compile, and `int` refuses a fraction. Text and
-  true/false are written as they are.
-- **Labels are fields.** A screen view has `readonly isScreenView = true`, and a user property
-  `readonly isUserProperty = true`, because TypeScript's interfaces are gone at run time. Your own
-  [markers](https://mkhytarmkhoian.github.io/herald-docs/guides/custom-markers/) work the same way,
-  with a field and an `is…` check.
-- **Factories pick events with `instanceof`,** so events are classes.
-- **Calls don't wait for each other.** A call reaches every vendor at once and returns a promise that
-  settles when they're all done. It never rejects: a vendor that fails goes to your error reporter.
-  When order matters, such as turning collection off before tracking, `await` the earlier call.
-- **Setup mistakes throw.** A provider without a name or capabilities, two providers with the same
-  name, or a fallback factory that isn't last, throw when the app sets up Herald, with a message
-  saying what to change.
+- **A number says its type:** `int(3)` or `double(9.99)`, because JavaScript can't tell `3` from
+  `3.0`. A bare number doesn't compile.
+- **Labels are fields,** such as `readonly isScreenView = true`, because TypeScript interfaces don't
+  exist when the app runs. Your own
+  [markers](https://mkhytarmkhoian.github.io/herald-docs/guides/custom-markers/) work the same way.
+- **Events are classes,** because factories pick them with `instanceof`.
+- **Calls don't wait for each other.** When order matters, such as turning collection off before
+  tracking, `await` the first call. A call never fails: a vendor's error goes to your error
+  reporter.
+- **Setup mistakes throw** when the app sets up Herald, with a message saying what to change.
 <!-- --8<-- [end:differences] -->
 
 ## Example app
@@ -139,10 +132,9 @@ on-screen timeline.
 
 ## Documentation
 
-The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, with the code
-for React Native next to Android, Flutter and iOS. That code comes from
-[`docs-samples`](docs-samples), which CI compiles and tests. To work on
-Herald itself, see [CONTRIBUTING](CONTRIBUTING.md); to release it, [RELEASING](RELEASING.md).
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides. Its
+TypeScript code comes from [`docs-samples`](docs-samples), which CI compiles and tests. To work on
+Herald, see [CONTRIBUTING](CONTRIBUTING.md); to release it, [RELEASING](RELEASING.md).
 
 ## License
 

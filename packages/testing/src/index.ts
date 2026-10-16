@@ -1,8 +1,6 @@
 /**
- * A fake Herald vendor for tests.
- *
- * Register a {@link FakeAnalyticsProvider} with a real `Herald`, run the code under test, then
- * check what it recorded.
+ * A fake Herald vendor for tests: {@link FakeAnalyticsProvider} records calls, and its assertions
+ * check them.
  *
  * @packageDocumentation
  */

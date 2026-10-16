@@ -3,7 +3,7 @@ import type { Event } from '@herald-analytics/core';
 
 import { useAnalytics } from './scope';
 
-/** What a list says about one item. React Native names this type differently across versions. */
+/** What a list says about one item. Herald has its own, because React Native renamed it. */
 interface ListItemToken {
   readonly item: unknown;
   readonly key: string;
@@ -21,31 +21,16 @@ export interface ImpressionListProps {
 export interface ImpressionOptions {
   /** How much of an item must be on screen: from 0, any part, to 1, all of it. 0.5 by default. */
   readonly threshold?: number;
-  /**
-   * How long it must stay that visible, in milliseconds. 0 by default. The list checks the item
-   * again when the time is up, not all along.
-   */
+  /** How long it must stay that visible, in milliseconds. 0 by default. */
   readonly minVisibleMs?: number;
 }
 
 /**
- * Tracks an impression of each list item once at least `threshold` of it is on screen. With
- * `minVisibleMs`, it must still be that visible when the time is up, or it doesn't count. Spread the
- * result onto a `FlatList`, `SectionList` or `VirtualizedList`:
+ * Tracks each list item once it's visible enough, for long enough. Spread the result onto a
+ * `FlatList`, `SectionList` or `VirtualizedList`.
  *
- * ```tsx
- * const impressions = useImpressions((offer: Offer) => new OfferShown(offer.id), {
- *   threshold: 0.5,
- *   minVisibleMs: 1000,
- * });
- * <FlatList data={offers} renderItem={renderOffer} {...impressions} />;
- * ```
- *
- * It counts once per appearance: once an item has left the screen completely, coming back counts
- * again. Items are told apart by the list's keys. The options are read once, because a list can't
- * change them later. Throws if `threshold` isn't between 0 and 1, or `minVisibleMs` is negative.
- *
- * It needs a `HeraldScope` above it.
+ * It counts once per appearance: an item that left the screen completely counts again when it comes
+ * back. The options are read once, because a list can't change them later.
  */
 export function useImpressions<T>(
   eventFor: (item: T) => Event,
@@ -81,7 +66,7 @@ export function useImpressions<T>(
               if (!token.isViewable || counted.has(token.key)) continue;
               counted.add(token.key);
               const { analytics, eventFor } = latest.current;
-              // Herald never rejects. Another tracker's failure shows up as an unhandled rejection.
+              // Herald never rejects; another tracker's failure becomes an unhandled rejection.
               void analytics.track(eventFor(token.item as T));
             }
           },

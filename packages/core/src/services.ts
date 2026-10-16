@@ -2,32 +2,17 @@ import type { Event } from './event';
 import type { Identity } from './identity';
 import type { Property } from './property';
 
-/**
- * Somewhere an {@link Event} can be sent.
- *
- * Vendor adapters, `Herald` and your own decorators implement it. A class that only tracks events
- * should depend on this, not on `Herald`.
- *
- * ```ts
- * // Keeps events with personal data away from `inner`.
- * class ExceptPersonalDataTracker implements EventTrackerService {
- *   constructor(private readonly inner: EventTrackerService) {}
- *
- *   async track(event: Event): Promise<void> {
- *     if (!isPersonalData(event)) await this.inner.track(event);
- *   }
- * }
- * ```
- */
+/** Tracks events. A class that only tracks events should ask for this, not for `Herald`. */
 export interface EventTrackerService {
   track(event: Event): Promise<void>;
 }
 
-/** Somewhere a {@link Property} can be set. Like {@link EventTrackerService}, for properties. */
+/** Sets properties. */
 export interface PropertyTrackerService {
   set(property: Property): Promise<void>;
 }
 
+/** Signs the user in and out. */
 export interface IdentifiableUserService {
   identify(identity: Identity): Promise<void>;
 
@@ -35,23 +20,18 @@ export interface IdentifiableUserService {
   reset(): Promise<void>;
 }
 
-/** Starts a vendor and sends what it has buffered. */
+/** Starts vendors, and sends what they have waiting. */
 export interface AnalyticsLifecycleService {
-  /** Starts the vendor SDK. Call it once, when the app starts. */
+  /** Call it once, when the app starts. */
   start(): Promise<void>;
 
-  /**
-   * Asks the vendor to send what it has buffered. Useful when consent is revoked or the app goes to
-   * the background.
-   */
+  /** Asks the vendor to send what it has waiting now. */
   flush(): Promise<void>;
 }
 
 /**
- * Turns a vendor's data collection on or off.
- *
- * It can't stop what a vendor collects before the first call. Some vendors need their own setting
- * to start with collection off; each vendor package says what it needs.
+ * Turns data collection on or off. Some vendors collect before the first call unless their own
+ * setting turns it off; each vendor package says what it needs.
  */
 export interface ConsentService {
   setEnabled(enabled: boolean): Promise<void>;

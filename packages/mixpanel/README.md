@@ -31,12 +31,10 @@ const tracker = new MixpanelAnalyticsTrackerService({
 const service = new MixpanelAnalyticsService(mixpanel);
 ```
 
-Values keep their types. A user property goes to the People profile and any other property
-becomes a super property. Revoking consent asks Mixpanel to flush, then opts out; Mixpanel sends in
-the background, so an event tracked just before may still be lost.
+A user property goes to the People profile, and any other property becomes a super property.
+Turning consent off flushes, then opts out, but an event tracked just before may still be lost.
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

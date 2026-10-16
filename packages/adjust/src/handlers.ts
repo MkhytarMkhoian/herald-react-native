@@ -10,8 +10,7 @@ import {
 import type { AdjustAdRevenueEvent, AdjustRevenueEvent } from './revenue';
 import { toAdjustEvent } from './values';
 
-// Adjust's calls hand the work to the native SDK and return nothing, so Herald can't see what
-// happens after.
+// Adjust's calls return nothing, so Herald can't see a failure in the native SDK.
 
 /** One call to Adjust for one event. A factory builds it. */
 export interface AdjustEventTracker {
@@ -23,7 +22,7 @@ export interface AdjustPropertySetter {
   set(): Promise<void>;
 }
 
-/** Sends the event under `eventToken`. Its name isn't sent: the token identifies the event. */
+/** Sends the event under `eventToken`. The token, not the name, tells Adjust which event it is. */
 export class TokenAdjustEventTracker implements AdjustEventTracker {
   constructor(
     readonly event: Event,
@@ -46,7 +45,7 @@ export class RevenueAdjustEventTracker implements AdjustEventTracker {
   }
 }
 
-/** Sends ad revenue. Unlike events, it needs no dashboard token. */
+/** Sends ad revenue. It needs no dashboard token. */
 export class AdRevenueAdjustEventTracker implements AdjustEventTracker {
   constructor(readonly event: AdjustAdRevenueEvent) {}
 
@@ -56,11 +55,8 @@ export class AdRevenueAdjustEventTracker implements AdjustEventTracker {
 }
 
 /**
- * Adds the property as a global callback parameter, as text, so Adjust attaches it to every later
- * event.
- *
- * `AdjustAnalyticsService` keeps the user id in the same place, so a property named like its
- * identity parameter overwrites the user id.
+ * Adds the property, as text, as a global callback parameter, sent with every later event. Don't
+ * name a property like the user id's parameter, or it replaces the user id.
  */
 export class GenericAdjustPropertySetter implements AdjustPropertySetter {
   constructor(readonly property: Property) {}

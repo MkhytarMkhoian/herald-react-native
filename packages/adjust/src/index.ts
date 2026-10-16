@@ -1,6 +1,5 @@
 /**
- * Sends Herald events to Adjust: events by dashboard token, purchases and ad revenue. See the
- * package README for the setup.
+ * Sends Herald events to Adjust: events by dashboard token, purchases and ad revenue.
  *
  * @packageDocumentation
  */

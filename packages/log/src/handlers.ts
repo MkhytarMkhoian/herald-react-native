@@ -9,12 +9,7 @@ import {
 
 import { logRecord } from './log-record';
 
-/**
- * Where the log adapter prints.
- *
- * Every record is one call with one string, already formatted. Point it at whatever logging you
- * use, such as `(message) => console.log(message)`, and pass it to the adapter's factories.
- */
+/** Where the log prints, such as `(message) => console.log(message)`. One call per record. */
 export type AnalyticsLogger = (message: string) => void;
 
 /** One call to the log for one event. A factory builds it. */

@@ -16,10 +16,7 @@ import {
 } from './handlers';
 import type { AmplitudeClient } from './values';
 
-/**
- * Tracks any event under its own name, with its parameters. Claims every event, so it goes last in
- * a chain.
- */
+/** Tracks any event under its own name. It claims everything, so it goes last in a chain. */
 export class GenericAmplitudeEventTrackerFactory
   implements AmplitudeEventTrackerFactory, FallbackFactory
 {
@@ -36,10 +33,7 @@ export class GenericAmplitudeEventTrackerFactory
   }
 }
 
-/**
- * Claims every screen view as `[Amplitude] Screen Viewed` and declines everything else. To send
- * screen views differently, put your own factory before this one.
- */
+/** Sends every screen view as Amplitude's own `[Amplitude] Screen Viewed`. */
 export class ScreenViewAmplitudeEventTrackerFactory implements AmplitudeEventTrackerFactory {
   constructor(private readonly amplitude: AmplitudeClient) {}
 
@@ -50,8 +44,8 @@ export class ScreenViewAmplitudeEventTrackerFactory implements AmplitudeEventTra
 }
 
 /**
- * Sets any property as an Amplitude user property, user properties included: Amplitude has one
- * kind of property. Claims every property, so it goes last in a chain.
+ * Sets any property as an Amplitude user property, since Amplitude has one kind. It claims
+ * everything, so it goes last in a chain.
  */
 export class GenericAmplitudePropertySetterFactory
   implements AmplitudePropertySetterFactory, FallbackFactory

@@ -39,17 +39,16 @@ const provider = new HeraldProvider({
 
 | Herald | Firebase |
 | --- | --- |
-| an event | `logEvent`, with numbers as numbers and flags as `'true'`/`'false'` |
+| an event | `logEvent`: numbers stay numbers, true/false becomes text |
 | a screen view | `logEvent('screen_view')` with `screen_name` |
-| a property | `setUserProperty`, in its string form |
+| a property | `setUserProperty`, as text |
 | `identify` / `reset` | `setUserId(id)` / `setUserId(null)` |
 | `setEnabled` | `setAnalyticsCollectionEnabled` |
 
-Firebase checks an event's name right away, so a reserved or badly formed name reaches Herald's
-error reporter. It doesn't report what happens after that.
+A reserved or badly formed event name goes to Herald's error reporter.
 
-**Firebase collects before consent** unless collection starts off. Set it in `firebase.json` at
-your app's root, which React Native Firebase applies to both native projects:
+**Firebase collects before consent** unless you turn it off in `firebase.json`, next to your
+`package.json`:
 
 ```json
 { "react-native": { "analytics_auto_collection_enabled": false } }
@@ -57,6 +56,5 @@ your app's root, which React Native Firebase applies to both native projects:
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

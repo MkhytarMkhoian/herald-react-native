@@ -2,12 +2,7 @@ import type { Event } from './event';
 import { nameOf } from './internal';
 import type { Property } from './property';
 
-/**
- * Thrown by a `RequireMapped` factory when no factory claimed an event.
- *
- * The message names the event and its class. In release builds the minifier renames classes, but
- * not the event name.
- */
+/** Thrown by a `RequireMapped` factory for an event that no factory claimed. */
 export class UnhandledEventError extends Error {
   constructor(readonly event: Event) {
     super(

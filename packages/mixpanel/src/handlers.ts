@@ -32,11 +32,8 @@ export class GenericMixpanelEventTracker implements MixpanelEventTracker {
 }
 
 /**
- * Tracks the event as a `screen_view` event, with its name as `screen_name`: the names GA4 uses,
- * since Mixpanel has none of its own.
- *
- * Throws if the event has its own `screen_name` parameter, because it would replace the screen's
- * name.
+ * Tracks the event as `screen_view`, with its name as `screen_name`, as GA4 does: Mixpanel has no
+ * screen event of its own. Throws if the event has its own `screen_name` parameter.
  */
 export class ScreenViewMixpanelEventTracker implements MixpanelEventTracker {
   constructor(
@@ -56,10 +53,7 @@ export class ScreenViewMixpanelEventTracker implements MixpanelEventTracker {
   }
 }
 
-/**
- * Registers the property as a super property, so Mixpanel attaches it to every later event from
- * this device.
- */
+/** Registers the property as a super property, sent with every later event. */
 export class GenericMixpanelPropertySetter implements MixpanelPropertySetter {
   constructor(
     readonly property: Property,

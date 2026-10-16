@@ -2,8 +2,8 @@ import type { AnalyticsValue } from '@herald-analytics/core';
 import type { Types } from '@amplitude/analytics-react-native';
 
 /**
- * The Amplitude client Herald calls: an instance from `createInstance()`, or the default one,
- * `import * as amplitude from '@amplitude/analytics-react-native'`.
+ * The Amplitude client Herald calls: the `@amplitude/analytics-react-native` module itself, or an
+ * instance from `createInstance()`.
  */
 export type AmplitudeClient = Pick<
   Types.ReactNativeClient,

@@ -8,23 +8,17 @@ import type {
 import type { AmplitudeClient } from './values';
 
 /**
- * Amplitude's lifecycle, identity and consent, over the Amplitude client the app has set up.
+ * Amplitude's start, sign-in and consent.
  *
- * Amplitude collects from the moment it's initialised. Initialise it with `optOut: true` so nothing
- * is sent before the user answers, then call `setEnabled` with the stored answer after `start` on
- * every launch.
- *
- * To keep the user id away from Amplitude, register the provider without `identity`.
+ * Initialise Amplitude with `optOut: true`, so it sends nothing before consent. It doesn't remember
+ * the choice, so call `setEnabled` with the stored answer on every launch.
  */
 export class AmplitudeAnalyticsService
   implements AnalyticsLifecycleService, IdentifiableUserService, ConsentService
 {
   constructor(private readonly amplitude: AmplitudeClient) {}
 
-  /**
-   * The app starts Amplitude with `init`, so there is nothing to do. Amplitude keeps calls made
-   * before `init` finishes and sends them after.
-   */
+  /** The app starts Amplitude with `init`, so there is nothing to do. */
   async start(): Promise<void> {}
 
   /** Asks Amplitude to send what it has. Herald doesn't wait for the upload. */
@@ -40,10 +34,7 @@ export class AmplitudeAnalyticsService
     this.amplitude.setUserId(identity.userId);
   }
 
-  /**
-   * Clears the user id and also changes the device id, so the next user isn't linked to the last
-   * one.
-   */
+  /** Clears the user id and changes the device id, so the next user isn't linked to this one. */
   async reset(): Promise<void> {
     this.amplitude.reset();
   }

@@ -29,17 +29,15 @@ const tracker = new AmplitudeAnalyticsTrackerService({
 const service = new AmplitudeAnalyticsService(amplitude);
 ```
 
-An instance from `amplitude.createInstance()` works the same way.
+An instance from `amplitude.createInstance()` works too.
 
-Values keep their types. A screen view becomes `[Amplitude] Screen Viewed`, so don't also call
-Amplitude's own `trackScreenView` or `trackScreenViewOnNavigationStateChange`. Purchases go
-through `AmplitudeRevenueEvent` and `RevenueAmplitudeEventTracker`, deduplicated by `insertId`.
+A screen view becomes `[Amplitude] Screen Viewed`, so don't also track screens with Amplitude
+itself. Purchases go through `AmplitudeRevenueEvent` and `RevenueAmplitudeEventTracker`.
 
-A call is done once Amplitude has the event: Herald doesn't wait for the upload. Call `setEnabled`
-with the stored answer after `start` on every launch.
+Amplitude doesn't remember the opt-out, so call `setEnabled` with the stored answer on every
+launch.
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

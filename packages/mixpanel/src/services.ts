@@ -7,13 +7,10 @@ import type {
 import type { Mixpanel } from 'mixpanel-react-native';
 
 /**
- * Mixpanel's lifecycle, identity and consent, over a `Mixpanel` the app has created.
+ * Mixpanel's start, sign-in and consent.
  *
- * `start` doesn't opt out: `optOutTracking` deletes unsent events and the stored user, so doing it
- * every launch would wipe a user who agreed. Initialise Mixpanel with `init(true)`, which opts out
- * by default, instead; `setEnabled` opts in when the user agrees, and Mixpanel remembers it.
- *
- * To keep the user id away from Mixpanel, register the provider without `identity`.
+ * Create Mixpanel opted out, so it sends nothing before consent. `start` can't opt out for you:
+ * that deletes unsent events and the stored user every launch.
  */
 export class MixpanelAnalyticsService
   implements AnalyticsLifecycleService, IdentifiableUserService, ConsentService
@@ -23,15 +20,12 @@ export class MixpanelAnalyticsService
   /** Mixpanel is ready once `init` has finished, so there is nothing to do. */
   async start(): Promise<void> {}
 
-  /** Asks Mixpanel to send what it has. Mixpanel sends in the background and doesn't say when. */
+  /** Asks Mixpanel to send what it has. It doesn't say when it's done. */
   async flush(): Promise<void> {
     this.mixpanel.flush();
   }
 
-  /**
-   * Opting out asks Mixpanel to flush first, as the other SDKs do. Mixpanel deletes what it hasn't
-   * sent when it opts out, so an event tracked just before may still be lost.
-   */
+  /** Flushes before opting out, because opting out deletes what Mixpanel hasn't sent. */
   async setEnabled(enabled: boolean): Promise<void> {
     if (enabled) {
       this.mixpanel.optInTracking();

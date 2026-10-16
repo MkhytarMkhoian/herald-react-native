@@ -1,9 +1,6 @@
 import { nameOf } from './internal';
 
-/**
- * A factory that answers for everything, so it must be last in a chain: the generic factories,
- * which send everything, and the `RequireMapped` ones, which throw.
- */
+/** A factory that answers for everything, such as a generic one, so it must be last in a chain. */
 export interface FallbackFactory {
   readonly isFallback: true;
 }
@@ -12,11 +9,7 @@ export function isFallbackFactory(factory: object): factory is FallbackFactory {
   return 'isFallback' in factory && factory.isFallback === true;
 }
 
-/**
- * Throws if `factories` has more than one {@link FallbackFactory}, or one that isn't last.
- *
- * Composite factories call it when they're built, so a wrong chain fails at start-up.
- */
+/** Throws if a {@link FallbackFactory} isn't last, or there's more than one. */
 export function requireFallbackLast(factories: readonly object[]): void {
   const fallbacks = factories
     .map((factory, index) => ({ factory, number: index + 1 }))

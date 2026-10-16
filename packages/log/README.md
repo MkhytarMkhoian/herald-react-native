@@ -1,6 +1,6 @@
 # Herald log
 
-A Herald vendor that prints every call as a readable record, for debug builds:
+A Herald vendor that prints every call, for debug builds:
 
 ```
 [herald] event   checkout_started
@@ -41,11 +41,9 @@ const herald = new Herald({
 });
 ```
 
-The user id is printed as-is, so register this provider in debug builds only. `__DEV__` is React
-Native's flag for them.
+It prints the user id as-is, so use it in debug builds only, when `__DEV__` is true.
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

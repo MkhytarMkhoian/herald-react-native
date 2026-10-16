@@ -1,6 +1,5 @@
 /**
- * Sends Herald events and properties to Firebase Analytics (GA4). See the package README for the
- * setup.
+ * Sends Herald events and properties to Firebase Analytics (GA4).
  *
  * @packageDocumentation
  */

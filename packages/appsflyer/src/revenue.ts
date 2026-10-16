@@ -24,11 +24,8 @@ export interface AppsFlyerPurchaseEventOptions {
 }
 
 /**
- * A purchase, as AppsFlyer's `af_purchase`, with its revenue under `af_revenue`.
- *
- * Your events don't extend it: your AppsFlyer factory builds one from your event and sends it with
- * `PurchaseAppsFlyerEventTracker`. Throws for a revenue that isn't a finite number, or a quantity
- * that isn't whole.
+ * A purchase, sent as `af_purchase` with its revenue in `af_revenue`. Your factory builds one from
+ * your event and sends it with `PurchaseAppsFlyerEventTracker`. Throws for a bad number.
  */
 export class AppsFlyerPurchaseEvent implements Event {
   readonly name: string;
@@ -41,7 +38,7 @@ export class AppsFlyerPurchaseEvent implements Event {
   readonly parameters: EventParameters;
 
   constructor(options: AppsFlyerPurchaseEventOptions) {
-    // Called for their checks only: they throw for a wrong number.
+    // Only to check the numbers: they throw for a bad one.
     double(options.revenue);
     if (options.quantity !== undefined) int(options.quantity);
     this.name = options.name;
@@ -54,10 +51,7 @@ export class AppsFlyerPurchaseEvent implements Event {
     this.parameters = options.parameters ?? {};
   }
 
-  /**
-   * The values AppsFlyer receives. Empty optional fields are left out. Throws if `parameters` has a
-   * key this purchase sets itself.
-   */
+  /** The values AppsFlyer receives. Throws if a parameter uses a key this purchase sets. */
   toAppsFlyerEventValues(): Record<string, string | number | boolean> {
     const values: Record<string, string | number> = {
       af_revenue: this.revenue,
@@ -85,8 +79,8 @@ export interface AppsFlyerSubscribeEventOptions {
 }
 
 /**
- * A subscription, as AppsFlyer's `af_subscribe`, with its revenue under `af_revenue`. Sent with
- * `SubscribeAppsFlyerEventTracker`. Throws for a revenue that isn't a finite number.
+ * A subscription, sent as `af_subscribe` with its revenue in `af_revenue`, by
+ * `SubscribeAppsFlyerEventTracker`. Throws for a bad number.
  */
 export class AppsFlyerSubscribeEvent implements Event {
   readonly name: string;
@@ -102,7 +96,7 @@ export class AppsFlyerSubscribeEvent implements Event {
     this.parameters = options.parameters ?? {};
   }
 
-  /** Throws if `parameters` has a key this subscription sets itself. */
+  /** The values AppsFlyer receives. Throws if a parameter uses a key this subscription sets. */
   toAppsFlyerEventValues(): Record<string, string | number | boolean> {
     return withParameters(this, { af_revenue: this.revenue, af_currency: this.currency });
   }
@@ -123,10 +117,7 @@ export interface AppsFlyerAdRevenueEventOptions {
   readonly parameters?: EventParameters;
 }
 
-/**
- * Ad revenue, sent with `AdRevenueAppsFlyerEventTracker`. Throws for a revenue that isn't a finite
- * number.
- */
+/** Ad revenue, sent by `AdRevenueAppsFlyerEventTracker`. Throws for a bad number. */
 export class AppsFlyerAdRevenueEvent implements Event {
   readonly name: string;
   readonly monetizationNetwork: string;
@@ -150,7 +141,7 @@ export class AppsFlyerAdRevenueEvent implements Event {
   }
 }
 
-/** The event's parameters followed by `values`, refusing a parameter that would be overwritten. */
+/** The event's parameters plus `values`. Throws if a parameter would be overwritten. */
 function withParameters(
   event: Event,
   values: Record<string, string | number>,

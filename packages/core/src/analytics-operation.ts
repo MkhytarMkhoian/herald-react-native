@@ -1,8 +1,5 @@
-// Which call failed: tracking an event, setting a property, and so on. Operations hold names only,
-// never values, so no personal data reaches the error reporter.
-//
-// Each spells out its own toString: these strings reach crash reports from release builds, where
-// the minifier renames classes.
+// Each operation holds names only, never values, so no personal data reaches the error reporter.
+// Each writes its own toString, because release builds rename classes.
 
 export class TrackOperation {
   constructor(readonly eventName: string) {}

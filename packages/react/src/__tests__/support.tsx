@@ -32,8 +32,8 @@ export class TestScreenView implements ScreenViewEvent {
   ) {}
 }
 
-// Test navigators built from React Navigation's own routers. They render every route, as a real
-// stack keeps the screens under the top one mounted, so focus changes are what the hooks see.
+// Test navigators built from React Navigation's own routers. They keep every screen mounted, as a
+// real stack does, so the hooks see only focus changes.
 
 interface NavigatorProps {
   children: ReactNode;
@@ -86,10 +86,7 @@ export function tracked(analytics: FakeAnalyticsProvider): string[] {
   return analytics.events.map((event) => event.name);
 }
 
-/**
- * Replaces React Native's app state, which is a stand-in object in tests, with one the test moves.
- * Call `restore` after the test.
- */
+/** Replaces React Native's app state with one the test controls. Call `restore` after the test. */
 export function fakeAppState(): { set(state: AppStateStatus): Promise<void>; restore(): void } {
   const appState = AppState as { currentState: unknown };
   const original = appState.currentState;

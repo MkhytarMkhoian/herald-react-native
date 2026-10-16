@@ -1,10 +1,7 @@
 import { AdjustEvent } from 'react-native-adjust';
 import { AnalyticsValue } from '@herald-analytics/core';
 
-/**
- * An `AdjustEvent` for the dashboard event `eventToken`, with these parameters as callback
- * parameters. Adjust's parameters are text, so values are sent in their string form.
- */
+/** An `AdjustEvent` for `eventToken`, with the parameters as callback parameters, as text. */
 export function toAdjustEvent(
   parameters: Readonly<Record<string, AnalyticsValue>>,
   eventToken: string,

@@ -1,9 +1,6 @@
 import type { AnalyticsValue } from '@herald-analytics/core';
 
-/**
- * The AppsFlyer calls Herald makes. Pass `AppsFlyer` from `react-native-appsflyer` 7, after
- * `init`.
- */
+/** The AppsFlyer calls Herald makes. Pass `AppsFlyer` from `react-native-appsflyer` 7. */
 export interface AppsFlyerClient {
   logEvent(params: {
     eventName: string;
@@ -21,10 +18,7 @@ export interface AppsFlyerClient {
   setCustomerUserId(params: { customerId: string }): Promise<void>;
 }
 
-/**
- * The parameters with their types kept. AppsFlyer counts revenue only when `af_revenue` arrives as a
- * number, so a number must stay one.
- */
+/** The parameters with their types kept: AppsFlyer counts revenue only from a number. */
 export function toAppsFlyerEventValues(
   parameters: Readonly<Record<string, AnalyticsValue>>,
 ): Record<string, string | number | boolean> {

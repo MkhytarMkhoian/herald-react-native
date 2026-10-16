@@ -17,23 +17,11 @@ import {
 export type EventClass = abstract new (...args: never[]) => Event;
 
 /**
- * Claims every event that is an instance of a class in `tokens`, with that class's dashboard
- * token, and declines the rest.
+ * Sends each event whose class is in `tokens`, with that class's dashboard token:
+ * `new TokenAdjustEventTrackerFactory([[SignUpCompleted, 'abc123']])`. Other events aren't sent.
  *
- * ```ts
- * new TokenAdjustEventTrackerFactory([
- *   [SignUpCompleted, 'abc123'],
- *   [CheckoutStarted, 'def456'],
- * ]);
- * ```
- *
- * Events are matched by class, not by name, so the compiler checks the list, and renaming an event
- * can't quietly stop it reaching Adjust. Throws if a class is listed twice.
- *
- * Adjust only knows events created in its dashboard, so there is no generic event factory: an event
- * without a token isn't sent. One token per event; for an event that should count as several Adjust
- * events, write a factory that answers with several `TokenAdjustEventTracker`s and put it before
- * this one.
+ * Events are matched by class, not by name, so a renamed event keeps its token. Throws if a class
+ * is listed twice.
  */
 export class TokenAdjustEventTrackerFactory implements AdjustEventTrackerFactory {
   private readonly tokens: readonly (readonly [EventClass, string])[];
@@ -62,8 +50,8 @@ export class TokenAdjustEventTrackerFactory implements AdjustEventTrackerFactory
 }
 
 /**
- * Adds any property as a global callback parameter. Adjust has no user profile, so this covers
- * user properties too. Claims everything, so it belongs last in a chain.
+ * Adds any property as a global callback parameter, since Adjust has no user profile. It claims
+ * everything, so it goes last in a chain.
  */
 export class GenericAdjustPropertySetterFactory
   implements AdjustPropertySetterFactory, FallbackFactory

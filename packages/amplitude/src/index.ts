@@ -1,6 +1,6 @@
 /**
  * Sends Herald events and properties to Amplitude: events, user properties, screen views and
- * revenue. See the package README for the setup.
+ * revenue.
  *
  * @packageDocumentation
  */

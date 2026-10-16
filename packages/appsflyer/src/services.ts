@@ -8,15 +8,11 @@ import type {
 import type { AppsFlyerClient } from './values';
 
 /**
- * AppsFlyer's lifecycle, identity and consent, over `AppsFlyer` once the app has called `init` and
- * `registerSessionReadyListener`.
+ * AppsFlyer's start, sign-in and consent, once the app has called `init`.
  *
- * **AppsFlyer starts on consent, not on `start`.** `start` stops AppsFlyer, so a fresh install sends
- * nothing, not even the install, until `setEnabled` turns it on. AppsFlyer forgets both the stop and
- * the user id between launches, so on every cold start call `identify`, then `setEnabled` with the
+ * `start` stops AppsFlyer, so nothing is sent until `setEnabled(true)`. AppsFlyer forgets the stop
+ * and the user id between launches, so on every launch call `identify`, then `setEnabled` with the
  * stored answer.
- *
- * Granular consent, such as `setConsentData` or `anonymizeUser`, is set on `AppsFlyer` itself.
  */
 export class AppsFlyerAnalyticsService
   implements AnalyticsLifecycleService, IdentifiableUserService, ConsentService
@@ -39,9 +35,6 @@ export class AppsFlyerAnalyticsService
     return this.appsFlyer.setCustomerUserId({ customerId: identity.userId });
   }
 
-  /**
-   * Does nothing: AppsFlyer can't clear the user id. It forgets it at the next cold start; until
-   * then, events still carry it.
-   */
+  /** Does nothing: AppsFlyer can't clear the user id. It forgets it at the next launch. */
   async reset(): Promise<void> {}
 }

@@ -1,8 +1,7 @@
 # Herald testing
 
 A fake Herald vendor for tests. `FakeAnalyticsProvider` records every call instead of sending it,
-and its assertions check what your code tracked. It works with any test runner: a failed assertion
-throws an `AnalyticsAssertionError`.
+and its assertions check what your code tracked. It works with any test runner.
 
 ```bash
 npm install --save-dev @herald-analytics/testing
@@ -51,8 +50,7 @@ await new CheckoutViewModel(analytics, analytics).start('pro', 3);
 
 ## Events and their parameters
 
-Values are written as in the event, and compared by type too, because a number and its text reach a
-vendor differently:
+Values are compared by type too, because a vendor gets a number and its text differently:
 
 ```ts
 analytics.assertTracked('checkout_started', (event) =>
@@ -81,8 +79,7 @@ analytics.assertPropertySet('total_purchases', int(2)); // 1 was overwritten by 
 
 ## Order across different calls
 
-`records` lists every call in order, so you can check that a property was set before the event
-that should carry it:
+`records` lists every call in order, such as a property set before the event that needs it:
 
 ```ts
 await new CheckoutViewModel(analytics, analytics).pay(9.99, 1);
@@ -114,7 +111,7 @@ expect(analytics.events[0]).toBeInstanceOf(OrderPaid);
 
 ## When something is wrong
 
-Every failure explains itself and lists everything the fake received:
+Every failure says what went wrong and lists everything the fake received:
 
 ```
 Event 'checkout_started' parameter 'seats' was '3', expected int(3).
@@ -123,11 +120,9 @@ Recorded:
   1. event    checkout_started { plan = pro, seats = 3 }
 ```
 
-Like a real vendor, the fake refuses a value that isn't an analytics value, such as a bare number
-from plain JavaScript: the call fails, and through `Herald` it reaches the error reporter.
+Like a real vendor, the fake refuses a bad value, such as a bare number from plain JavaScript.
 
 ## Documentation
 
-It works with [`@herald-analytics/core`](https://www.npmjs.com/package/@herald-analytics/core), the
-core. The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
+The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides, and the
 [repository](https://github.com/MkhytarMkhoian/herald-react-native) has the other packages.

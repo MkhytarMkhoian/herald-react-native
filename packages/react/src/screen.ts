@@ -5,19 +5,15 @@ import type { Event } from '@herald-analytics/core';
 import { useAnalytics } from './scope';
 
 /**
- * When a screen is tracked by `useTrackOnScreen`:
- *
- * - `shown`: the screen became visible. It appeared, the user came back to it, or the app came back
- *   to view with it on top.
- * - `hidden`: the screen stopped being visible. Another screen opened over it, it closed, or the app
- *   went to the background.
+ * When `useTrackOnScreen` tracks: `shown`, each time the screen becomes visible, or `hidden`, each
+ * time it stops being visible.
  */
 export type ScreenMoment = 'shown' | 'hidden';
 
-// The screen hooks, shared by the React Navigation and Expo Router entries. Each entry finds out
-// whether its screen is focused, with its own library, and passes that in.
+// Shared by the React Navigation and Expo Router entries, which each pass in whether the screen is
+// focused.
 
-/** Tracks `event` when the screen reaches `on`. `focused` comes from the app's navigation library. */
+/** Tracks `event` when the screen reaches `on`. */
 export function useTrackWhenVisible(focused: boolean, event: Event, on: ScreenMoment): void {
   const analytics = useAnalytics();
   const appVisible = useAppVisible();
@@ -38,14 +34,14 @@ function reach(
   current: { analytics: { track(event: Event): Promise<void> }; event: Event; on: ScreenMoment },
   moment: ScreenMoment,
 ): void {
-  // Herald never rejects. Another tracker's failure shows up as an unhandled rejection.
+  // Herald never rejects; another tracker's failure becomes an unhandled rejection.
   if (moment === current.on) void current.analytics.track(current.event);
 }
 
 /** Whether the app isn't in the background. */
 function useAppVisible(): boolean {
   const appState = useSyncExternalStore(subscribeToAppState, () => AppState.currentState);
-  // 'inactive' is iOS briefly taking focus, as for Control Centre: still visible.
+  // 'inactive' is iOS briefly taking focus, as for Control Centre: the screen is still visible.
   return appState !== 'background';
 }
 

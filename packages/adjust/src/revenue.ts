@@ -21,11 +21,8 @@ export interface AdjustRevenueEventOptions {
 }
 
 /**
- * A purchase, in the fields Adjust's revenue tracking takes.
- *
- * Your events don't extend it: your Adjust factory builds one from your event and sends it with
- * `RevenueAdjustEventTracker`, under the purchase's dashboard token. Throws for a revenue that isn't
- * a finite number.
+ * A purchase, in Adjust's revenue fields. Your factory builds one from your event and sends it with
+ * `RevenueAdjustEventTracker`. Throws for a bad number.
  */
 export class AdjustRevenueEvent implements Event {
   readonly name: string;
@@ -71,9 +68,8 @@ export interface AdjustAdRevenueEventOptions {
 }
 
 /**
- * Ad revenue, in the fields Adjust's ad revenue tracking takes. Built by your Adjust factory and
- * sent with `AdRevenueAdjustEventTracker`. Throws for a revenue that isn't a finite number, or an
- * impression count that isn't whole.
+ * Ad revenue, in Adjust's ad revenue fields. Your factory builds one and sends it with
+ * `AdRevenueAdjustEventTracker`. Throws for a bad number.
  */
 export class AdjustAdRevenueEvent implements Event {
   readonly name: string;
@@ -87,7 +83,7 @@ export class AdjustAdRevenueEvent implements Event {
   readonly parameters: EventParameters;
 
   constructor(options: AdjustAdRevenueEventOptions) {
-    // Called for their checks only: they throw for a wrong number.
+    // Only to check the numbers: they throw for a bad one.
     double(options.revenue);
     if (options.adImpressionsCount !== undefined) int(options.adImpressionsCount);
     this.name = options.name;

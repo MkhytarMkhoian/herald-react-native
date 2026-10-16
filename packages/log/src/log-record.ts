@@ -1,17 +1,14 @@
 import { AnalyticsValue } from '@herald-analytics/core';
 
-/** Starts every record, so Herald's lines are easy to filter. */
+/** Starts every record, so Herald's lines are easy to find. */
 const logTag = '[herald]';
 
 /** Length of the longest kind, `enabled`, so headlines line up. */
 const kindWidth = 7;
 
 /**
- * Renders one record as one string: a header line, then a branch per parameter with the last one
- * closed by `└─`, values aligned on the longest key.
- *
- * One string, and one log call, so a record can't be split by another one. A record with no
- * headline (`reset`, `start`, `flush`) is the bare kind, with no padding to trail the line.
+ * One record as one string: a headline, then one line per parameter, with values lined up. One
+ * string, so another record can't split it.
  */
 export function logRecord(
   kind: string,

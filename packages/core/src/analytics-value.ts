@@ -1,8 +1,6 @@
 /**
- * A parameter or property value that keeps its type, so a number reaches the vendor as a number.
- *
- * Vendors can sum or average numbers, but only group text. Apps don't build these: they write an
- * {@link AnalyticsInput}, and vendors turn it into this with {@link AnalyticsValue.from}.
+ * A value that keeps its type, so a number reaches the vendor as a number. Apps write an
+ * {@link AnalyticsInput}; vendor packages turn it into this.
  */
 export type AnalyticsValue =
   | { readonly type: 'string'; readonly value: string }
@@ -11,18 +9,12 @@ export type AnalyticsValue =
   | { readonly type: 'bool'; readonly value: boolean };
 
 /**
- * What an event parameter or a property value can be: text, true/false, or a number wrapped in
- * {@link int} or {@link double}.
- *
- * A bare number doesn't compile. JavaScript can't tell `3` from `3.0`, so a number says its type.
- *
- * ```ts
- * { plan: 'pro', trial: false, seats: int(3), price: double(9.99) }
- * ```
+ * An event parameter or property value: text, true/false, or a number in {@link int} or
+ * {@link double}. A bare number doesn't compile, because JavaScript can't tell `3` from `3.0`.
  */
 export type AnalyticsInput = string | boolean | AnalyticsValue;
 
-/** A whole number. Throws for a fraction such as 2.5: Herald doesn't round. */
+/** A whole number. Throws for a fraction such as 2.5. */
 export function int(value: number): AnalyticsValue {
   if (!Number.isInteger(value)) {
     throw new RangeError(`int() needs a whole number, not ${value}. Use double() for a fraction.`);
@@ -41,13 +33,8 @@ export function double(value: number): AnalyticsValue {
   return Object.freeze({ type: 'double', value });
 }
 
-// Lets `AnalyticsValue.from(...)` sit next to the type of the same name, like a Kotlin companion
-// object.
 export const AnalyticsValue = {
-  /**
-   * The typed value of what an app wrote. Throws for a bare number, which TypeScript refuses but
-   * plain JavaScript lets through, and for anything else that isn't an {@link AnalyticsInput}.
-   */
+  /** The typed value of an {@link AnalyticsInput}. Throws for anything else, such as a number. */
   from(input: AnalyticsInput): AnalyticsValue {
     if (typeof input === 'string') return Object.freeze({ type: 'string', value: input });
     if (typeof input === 'boolean') return Object.freeze({ type: 'bool', value: input });
@@ -67,10 +54,7 @@ export const AnalyticsValue = {
     );
   },
 
-  /**
-   * The value as text, for vendors that take only text. A whole double keeps its `.0`, as on
-   * Android and iOS.
-   */
+  /** The value as text, for vendors that take only text. A whole double keeps its `.0`. */
   asString(value: AnalyticsValue): string {
     if (value.type === 'double' && Number.isInteger(value.value)) return value.value.toFixed(1);
     return String(value.value);
