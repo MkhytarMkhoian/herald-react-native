@@ -15,7 +15,7 @@
     "test": "jest && npm test -w herald-example",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
     "set-version": "node scripts/set-version.mjs",
-    "docs:api": "typedoc"
+    "docs:api": "npm run build && typedoc"
   },
   "prettier": {
     "printWidth": 100,
