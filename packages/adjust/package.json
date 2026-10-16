@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/adjust",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sends Herald events to Adjust: events by dashboard token, purchases and ad revenue.",
   "keywords": [
     "analytics",
@@ -45,7 +45,7 @@
     "prepack": "bob build"
   },
   "dependencies": {
-    "@herald-analytics/core": "^1.0.0"
+    "@herald-analytics/core": "^1.0.1"
   },
   "peerDependencies": {
     "react-native-adjust": "^5.8.0"

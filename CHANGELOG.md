@@ -1,5 +1,12 @@
 # Change Log
 
+## Version 1.0.1
+
+_2026-10-16_
+
+ * Fix: the API reference and the READMEs are in simpler words, and shorter. The packages' code
+   doesn't change.
+
 ## Version 1.0.0
 
 _2026-10-16_

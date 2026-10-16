@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/firebase",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sends Herald events and properties to Firebase Analytics (GA4).",
   "keywords": [
     "analytics",
@@ -45,7 +45,7 @@
     "prepack": "bob build"
   },
   "dependencies": {
-    "@herald-analytics/core": "^1.0.0"
+    "@herald-analytics/core": "^1.0.1"
   },
   "peerDependencies": {
     "@react-native-firebase/analytics": "^26.0.0"

@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/mixpanel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sends Herald events and properties to Mixpanel: events, the user profile and super properties.",
   "keywords": [
     "analytics",
@@ -44,7 +44,7 @@
     "prepack": "bob build"
   },
   "dependencies": {
-    "@herald-analytics/core": "^1.0.0"
+    "@herald-analytics/core": "^1.0.1"
   },
   "peerDependencies": {
     "mixpanel-react-native": "^4.0.0"
