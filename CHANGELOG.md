@@ -18,5 +18,8 @@ The first preview of Herald for React Native: the design of the other SDKs, in T
    `react-native-appsflyer` 7 and `@amplitude/analytics-react-native` 1.
  * New: `@herald-analytics/react`, an optional package for tracking from React Native components,
    like Flutter's `herald_widgets`: `useTrackScreenView` and `useTrackOnScreen` track when a screen
-   of React Navigation or Expo Router is shown or hidden, `useImpressions` tracks list items once
-   they are really on screen, and `useAnalytics` gives components the tracker for taps.
+   is shown or hidden, `useImpressions` tracks list items once they are really on screen, and
+   `useAnalytics` gives components the tracker for taps. It works with React Navigation 7, and with
+   Expo Router 57 or newer through `@herald-analytics/react/expo-router`.
+ * New: an example app, built with Expo Router, that sends every call to the log and to an
+   on-screen timeline.

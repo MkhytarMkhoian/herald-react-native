@@ -9,3 +9,10 @@ lib/
 # Editors
 .idea/
 .vscode/
+
+# The example app's generated files
+example/.expo/
+example/ios/
+example/android/
+example/dist/
+example/expo-env.d.ts

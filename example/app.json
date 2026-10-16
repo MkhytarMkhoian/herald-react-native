@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Herald example",
+    "slug": "herald-example",
+    "scheme": "heraldexample",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "io.github.mkhytarmkhoian.herald.example"
+    },
+    "android": {
+      "package": "io.github.mkhytarmkhoian.herald.example"
+    },
+    "plugins": ["expo-router", "./plugins/with-scene-delegate"]
+  }
+}

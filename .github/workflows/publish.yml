@@ -1,0 +1,37 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  # npm's trusted publishing: GitHub proves to npm that the run came from this repository's tag, so
+  # no npm token is stored. It also signs where each package was built.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm 11.5.1 or newer.
+      - run: npm install --global npm@^11.5.1
+      - run: npm ci
+      - run: node scripts/check-release.mjs "${GITHUB_REF_NAME#v}"
+      - run: npm run check
+      # In dependency order. A pre-release, such as 1.0.0-beta.1, goes to the "next" tag, so a plain
+      # npm install keeps getting the last stable version.
+      - name: Publish every package
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          tag=latest
+          if [[ "$version" == *-* ]]; then tag=next; fi
+          for package in core log testing react firebase adjust mixpanel appsflyer amplitude; do
+            npm publish --workspace "packages/$package" --access public --tag "$tag"
+          done

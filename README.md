@@ -5,6 +5,7 @@
 
 > *A herald announces an event to whoever is listening.*
 
+[![CI](https://github.com/MkhytarMkhoian/herald-react-native/actions/workflows/ci.yml/badge.svg)](https://github.com/MkhytarMkhoian/herald-react-native/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Docs](https://img.shields.io/badge/docs-website-indigo.svg)](https://mkhytarmkhoian.github.io/herald-docs/)
 
@@ -73,10 +74,15 @@ herald.track(new CheckoutStarted('pro', 3));
 Each vendor package works over that vendor's official React Native package, which your app installs
 itself, so React Native links its native code.
 
+## Example app
+
+[`example`](example) is an Expo Router app that sends every Herald call to the log and to an
+on-screen timeline.
+
 ## Documentation
 
 The [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) has the guides. To work on
-Herald itself, see [CONTRIBUTING](CONTRIBUTING.md).
+Herald itself, see [CONTRIBUTING](CONTRIBUTING.md); to release it, [RELEASING](RELEASING.md).
 
 ## License
 

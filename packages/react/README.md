@@ -8,10 +8,21 @@ You don't need it to use Herald. A view model can track its own events, screen v
 through `EventTrackerService`. Use this package when tracking from components is the simpler fit,
 such as counting a screen each time the user comes back to it.
 
-It works with [React Navigation](https://reactnavigation.org) 7 and with
-[Expo Router](https://docs.expo.dev/router/introduction/), which is built on it.
+## React Navigation or Expo Router
+
+Import from the path that matches your app's navigation. Everything has the same name in both.
+
+| Your app uses | Import from |
+| --- | --- |
+| [React Navigation](https://reactnavigation.org) 7 | `@herald-analytics/react` |
+| [Expo Router](https://docs.expo.dev/router/introduction/) 57 or newer | `@herald-analytics/react/expo-router` |
+
+Expo Router has its own copy of React Navigation inside, so a screen hook from the wrong path can't
+see the screen it's in.
 
 ## Set it up once
+
+With React Navigation:
 
 ```tsx
 <HeraldScope analytics={herald}>
@@ -19,7 +30,19 @@ It works with [React Navigation](https://reactnavigation.org) 7 and with
 </HeraldScope>
 ```
 
-With Expo Router, put `HeraldScope` in the root `_layout.tsx`, around the `<Stack />` or `<Slot />`.
+With Expo Router, in the root `app/_layout.tsx`:
+
+```tsx
+import { HeraldScope } from '@herald-analytics/react/expo-router';
+
+export default function RootLayout() {
+  return (
+    <HeraldScope analytics={herald}>
+      <Stack />
+    </HeraldScope>
+  );
+}
+```
 
 ## Screen views, owned by each screen
 

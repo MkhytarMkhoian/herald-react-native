@@ -2,16 +2,18 @@
   "name": "herald-react-native",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "example"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
-    "typecheck": "tsc",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc && tsc -p example",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "jest",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build"
+    "test": "jest && npm test -w herald-example",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
+    "set-version": "node scripts/set-version.mjs"
   },
   "prettier": {
     "printWidth": 100,
@@ -67,15 +69,23 @@
     "@babel/core": "^7.29.7",
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.5.2",
-    "@react-native/babel-preset": "^0.87.1",
+    "@react-native/babel-preset": "0.86.3",
     "@types/node": "^24.19.2",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
     "react-native-builder-bob": "^0.43.2",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.2"
+  },
+  "overrides": {
+    "react-dom": "19.2.3",
+    "react-native-gesture-handler": "~2.32.0",
+    "react-native-reanimated": "4.5.1",
+    "react-native-worklets": "0.10.1"
   }
 }

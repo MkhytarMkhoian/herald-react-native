@@ -1,12 +1,13 @@
 {
   "name": "@herald-analytics/react",
   "version": "0.0.0",
-  "description": "Track Herald events from React Native screens and lists: screen views each time a screen gets focus, impressions when something is really on screen, and taps.",
+  "description": "Track Herald events from React Native screens and lists, with React Navigation or Expo Router: screen views each time a screen gets focus, impressions when a list item is really on screen, and taps.",
   "keywords": [
     "analytics",
     "react",
     "react-native",
     "react-navigation",
+    "expo-router",
     "hooks"
   ],
   "homepage": "https://mkhytarmkhoian.github.io/herald-docs/",
@@ -24,6 +25,7 @@
   "types": "./lib/typescript/commonjs/src/index.d.ts",
   "exports": {
     ".": {
+      "herald-analytics-source": "./src/index.ts",
       "import": {
         "types": "./lib/typescript/module/src/index.d.ts",
         "default": "./lib/module/index.js"
@@ -31,6 +33,17 @@
       "require": {
         "types": "./lib/typescript/commonjs/src/index.d.ts",
         "default": "./lib/commonjs/index.js"
+      }
+    },
+    "./expo-router": {
+      "herald-analytics-source": "./src/expo-router.ts",
+      "import": {
+        "types": "./lib/typescript/module/src/expo-router.d.ts",
+        "default": "./lib/module/expo-router.js"
+      },
+      "require": {
+        "types": "./lib/typescript/commonjs/src/expo-router.d.ts",
+        "default": "./lib/commonjs/expo-router.js"
       }
     },
     "./package.json": "./package.json"
@@ -49,16 +62,26 @@
   },
   "peerDependencies": {
     "@react-navigation/native": "^7.0.0",
+    "expo-router": ">=57.0.0",
     "react": ">=19.0.0",
     "react-native": ">=0.78.0"
   },
+  "peerDependenciesMeta": {
+    "@react-navigation/native": {
+      "optional": true
+    },
+    "expo-router": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@herald-analytics/testing": "^0.0.0",
-    "@react-native/jest-preset": "0.87.1",
+    "@react-native/jest-preset": "0.86.3",
     "@react-navigation/native": "7.5.1",
     "@testing-library/react-native": "14.1.0",
-    "@types/react": "19.3.0",
-    "test-renderer": "^1.0.0"
+    "@types/react": "~19.2.2",
+    "expo-router": "~57.0.27",
+    "test-renderer": "~1.2.0"
   },
   "react-native-builder-bob": {
     "source": "src",

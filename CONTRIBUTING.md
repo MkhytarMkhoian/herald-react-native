@@ -21,9 +21,24 @@ npm run check  # all of the below
 npm run format:check  # Prettier, 100 columns
 npm run lint  # ESLint
 npm run typecheck  # TypeScript, strict
-npm test  # Jest
+npm test  # Jest, the packages' tests and the example's
 npm run build  # what npm will receive, in each package's lib/
 ```
+
+### The example app
+
+[`example`](example) is an Expo app in the same workspace. It uses the packages' source directly, so
+an edit shows up without building them first:
+
+```bash
+cd example
+npx expo run:ios  # or run:android; builds the native app, then starts the bundler
+```
+
+The example sets the versions of React and React Native for the whole repository, through Expo:
+when Expo moves to a new SDK, update `example/package.json` with `npx expo install --fix`, then the
+root `package.json`'s `react`, `react-native` and `@react-native/*` versions and the `overrides`
+to match. Two copies of React in one app break hooks, so they must stay the same.
 
 ## What every change needs
 
@@ -35,7 +50,7 @@ npm run build  # what npm will receive, in each package's lib/
   examples.
 - **Plain TypeScript.** Classes and interfaces, as in the other SDKs. A label is an interface with a
   `true` field and an `is…` check, such as `ScreenViewEvent` and `isScreenView`.
-- **Tests,** next to the code in `src/__tests__/`, named `*.test.ts`. A test file can also check
+- **Tests,** next to the code in `src/__tests__/`, named `*.test.ts` (`*.test.tsx` for components). A test file can also check
   that something doesn't compile, with `// @ts-expect-error`.
 - **A careful public API.** Everything exported from a package's `src/index.ts` is Herald's API and
   can only change incompatibly in a major version. Keep helpers out of the export list.

@@ -23,6 +23,7 @@
   "types": "./lib/typescript/commonjs/src/index.d.ts",
   "exports": {
     ".": {
+      "herald-analytics-source": "./src/index.ts",
       "import": {
         "types": "./lib/typescript/module/src/index.d.ts",
         "default": "./lib/module/index.js"

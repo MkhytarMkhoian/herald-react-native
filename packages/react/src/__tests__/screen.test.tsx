@@ -189,7 +189,9 @@ describe('setup mistakes', () => {
           <Home />
         </HeraldScope>,
       ),
-    ).rejects.toThrow('must be inside a screen of React Navigation or Expo Router');
+    ).rejects.toThrow(
+      'must be inside a screen of React Navigation. With Expo Router, import them from @herald-analytics/react/expo-router.',
+    );
   });
 
   test('without a HeraldScope is refused, with what to do', async () => {
