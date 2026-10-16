@@ -2,6 +2,7 @@
   "name": "herald-react-native",
   "private": true,
   "workspaces": [
+    "packages/core",
     "packages/*",
     "example"
   ],
