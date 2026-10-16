@@ -6,7 +6,7 @@ People profile and super properties.
 
 ```bash
 npx expo install mixpanel-react-native
-npm install @herald-analytics/core@next @herald-analytics/mixpanel@next
+npm install @herald-analytics/core @herald-analytics/mixpanel
 ```
 
 Install the vendor's package yourself, as on the first line, so React Native links its native

@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 1.0.0
+
+_2026-10-16_
+
+The first stable version, published under npm's `latest` tag: `npm install @herald-analytics/core`
+now installs it. The packages' code is the same as in 1.0.0-beta.2.
+
+ * New: the READMEs show how to install each vendor's own React Native package next to Herald's,
+   and how to type-check an app that imports `react-native-appsflyer`.
+ * New: the [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) shows the TypeScript
+   code next to Android, Flutter and iOS, and has the API reference.
+
 ## Version 1.0.0-beta.2
 
 _2026-10-16_

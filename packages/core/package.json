@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/core",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "One analytics vocabulary, heard by every vendor. Events, properties and the Herald fan-out, in plain TypeScript with no vendor SDK.",
   "keywords": [
     "analytics",

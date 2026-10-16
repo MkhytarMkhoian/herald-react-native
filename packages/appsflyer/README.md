@@ -6,7 +6,7 @@ this package handles events only.
 
 ```bash
 npx expo install react-native-appsflyer
-npm install @herald-analytics/core@next @herald-analytics/appsflyer@next
+npm install @herald-analytics/core @herald-analytics/appsflyer
 ```
 
 Install the vendor's package yourself, as on the first line, so React Native links its native
@@ -59,7 +59,7 @@ app:
 
 ```ts
 // react-native-appsflyer checks for Jest with `typeof jest`.
-declare var jest: unknown;
+declare let jest: unknown;
 ```
 
 Herald itself never imports it: it describes the AppsFlyer calls it makes with its own

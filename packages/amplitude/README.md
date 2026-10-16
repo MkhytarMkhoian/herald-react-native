@@ -6,7 +6,7 @@ events, user properties, screen views and revenue.
 
 ```bash
 npx expo install @amplitude/analytics-react-native @react-native-async-storage/async-storage
-npm install @herald-analytics/core@next @herald-analytics/amplitude@next
+npm install @herald-analytics/core @herald-analytics/amplitude
 ```
 
 Install the vendor's package yourself, as on the first line, so React Native links its native

@@ -5,7 +5,7 @@ Sends Herald events to Adjust, over [`react-native-adjust`](https://www.npmjs.co
 
 ```bash
 npx expo install react-native-adjust
-npm install @herald-analytics/core@next @herald-analytics/adjust@next
+npm install @herald-analytics/core @herald-analytics/adjust
 ```
 
 Install the vendor's package yourself, as on the first line, so React Native links its native

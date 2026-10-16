@@ -6,7 +6,7 @@ Sends Herald events and properties to Firebase Analytics (GA4), over
 
 ```bash
 npx expo install @react-native-firebase/app @react-native-firebase/analytics
-npm install @herald-analytics/core@next @herald-analytics/firebase@next
+npm install @herald-analytics/core @herald-analytics/firebase
 ```
 
 Install the vendor's package yourself, as on the first line, so React Native links its native
