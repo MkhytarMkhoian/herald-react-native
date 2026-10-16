@@ -57,6 +57,9 @@ mark the wrong one with `npm deprecate`.
 - **The `herald-analytics` organisation on npm,** which owns every package's name.
 - **Automated publishing,** set up as in [The first release](#the-first-release). No npm token is
   stored in GitHub.
+- **The `DOCS_DISPATCH_TOKEN` secret,** a GitHub token allowed to start herald-docs' workflows.
+  After publishing, the Publish workflow uses it to redeploy the website, which takes its
+  TypeScript samples, API reference and change log from the newest release tag.
 
 ## The first release
 

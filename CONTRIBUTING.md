@@ -40,6 +40,14 @@ when Expo moves to a new SDK, update `example/package.json` with `npx expo insta
 root `package.json`'s `react`, `react-native` and `@react-native/*` versions and the `overrides`
 to match. Two copies of React in one app break hooks, so they must stay the same.
 
+### The website's code
+
+The TypeScript on the [Herald website](https://mkhytarmkhoian.github.io/herald-docs/) comes from
+[`docs-samples`](docs-samples), which `npm run check` compiles and tests. Each piece sits between
+`// --8<-- [start:name]` and `// --8<-- [end:name]` markers, and the website includes it by file and
+name, as it does for the other SDKs. Renaming a file or a section means changing the page that uses
+it. The website also builds the API reference with `npm run docs:api`, into `build/api`.
+
 ## What every change needs
 
 - **Code that matches its surroundings.** Run `npm run format`. Use the same naming and the same

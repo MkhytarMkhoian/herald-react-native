@@ -1,0 +1,15 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Herald for React Native",
+  "entryPointStrategy": "packages",
+  "entryPoints": ["packages/*"],
+  "packageOptions": {
+    "entryPoints": ["src/index.ts"],
+    "tsconfig": "tsconfig.build.json",
+    "readme": "none"
+  },
+  "readme": "none",
+  "out": "build/api",
+  "excludePrivate": true,
+  "excludeInternal": true
+}

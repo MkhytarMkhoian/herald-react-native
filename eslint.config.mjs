@@ -9,6 +9,7 @@ export default defineConfig([
     ignores: [
       '**/lib/',
       '**/node_modules/',
+      'build/',
       'coverage/',
       'example/.expo/',
       'example/dist/',
@@ -19,7 +20,7 @@ export default defineConfig([
   js.configs.recommended,
   tseslint.configs.recommended,
   {
-    files: ['packages/react/**/*.{ts,tsx}', 'example/**/*.{ts,tsx}'],
+    files: ['packages/react/**/*.{ts,tsx}', 'example/**/*.{ts,tsx}', 'docs-samples/**/*.{ts,tsx}'],
     extends: [reactHooks.configs.flat['recommended-latest']],
   },
   prettier,

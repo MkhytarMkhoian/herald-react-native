@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // As in a new Expo app. react-native-appsflyer ships TypeScript source that fails with it.
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src", "test"]
+}

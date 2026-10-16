@@ -8,13 +8,14 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "typecheck": "tsc && tsc -p example",
+    "typecheck": "tsc && tsc -p docs-samples && tsc -p example",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "jest && npm test -w herald-example",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
-    "set-version": "node scripts/set-version.mjs"
+    "set-version": "node scripts/set-version.mjs",
+    "docs:api": "typedoc"
   },
   "prettier": {
     "printWidth": 100,
@@ -63,6 +64,29 @@
         "transformIgnorePatterns": [
           "/node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation)/)"
         ]
+      },
+      {
+        "displayName": "docs-samples",
+        "preset": "@react-native/jest-preset",
+        "roots": [
+          "<rootDir>/docs-samples"
+        ],
+        "testMatch": [
+          "**/test/**/*.test.ts?(x)"
+        ],
+        "setupFiles": [
+          "<rootDir>/docs-samples/test/setup.ts"
+        ],
+        "modulePathIgnorePatterns": [
+          "<rootDir>/packages/[^/]+/lib/"
+        ],
+        "moduleNameMapper": {
+          "^@herald-analytics/react/expo-router$": "<rootDir>/packages/react/src/expo-router.ts",
+          "^@herald-analytics/([^/]+)$": "<rootDir>/packages/$1/src"
+        },
+        "transformIgnorePatterns": [
+          "/node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation)/)"
+        ]
       }
     ]
   },
@@ -71,6 +95,7 @@
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.5.2",
     "@react-native/babel-preset": "0.86.3",
+    "@react-navigation/native-stack": "^7.21.0",
     "@types/node": "^24.19.2",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
@@ -80,6 +105,7 @@
     "react": "19.2.3",
     "react-native": "0.86.3",
     "react-native-builder-bob": "^0.43.2",
+    "typedoc": "^0.28.20",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.2"
   },

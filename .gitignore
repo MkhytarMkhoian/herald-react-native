@@ -16,3 +16,6 @@ example/ios/
 example/android/
 example/dist/
 example/expo-env.d.ts
+
+# The API reference, built by `npm run docs:api`
+build/

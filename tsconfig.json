@@ -19,6 +19,7 @@
     "verbatimModuleSyntax": true,
     "types": ["node"],
     "paths": {
+      "@herald-analytics/react/expo-router": ["./packages/react/src/expo-router.ts"],
       "@herald-analytics/*": ["./packages/*/src"]
     },
     "jsx": "react-jsx"
