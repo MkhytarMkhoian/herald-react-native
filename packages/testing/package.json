@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/testing",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A fake Herald vendor that records every event, property and call, with assertions for tests in apps that use Herald.",
   "keywords": [
     "analytics",
@@ -44,7 +44,7 @@
     "prepack": "bob build"
   },
   "dependencies": {
-    "@herald-analytics/core": "^1.0.0-beta.1"
+    "@herald-analytics/core": "^1.0.0-beta.2"
   },
   "react-native-builder-bob": {
     "source": "src",

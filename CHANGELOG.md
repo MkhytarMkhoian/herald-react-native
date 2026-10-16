@@ -1,5 +1,12 @@
 # Change Log
 
+## Version 1.0.0-beta.2
+
+_2026-10-16_
+
+No changes to the packages: the first version published by GitHub Actions, with provenance, which
+shows on npm where and how each package was built.
+
 ## Version 1.0.0-beta.1
 
 _2026-10-16_
