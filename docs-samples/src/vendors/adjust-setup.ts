@@ -3,6 +3,7 @@ import { HeraldProvider } from '@herald-analytics/core';
 import {
   AdjustAnalyticsService,
   AdjustAnalyticsTrackerService,
+  AdjustToken,
   CompositeAdjustEventTrackerFactory,
   CompositeAdjustPropertySetterFactory,
   GenericAdjustPropertySetterFactory,
@@ -19,7 +20,7 @@ export function adjustProvider(featureFactories: AdjustEventTrackerFactory[]): H
   const tracker = new AdjustAnalyticsTrackerService({
     eventTrackerFactory: new CompositeAdjustEventTrackerFactory([
       ...featureFactories, // revenue and custom mappings first
-      new TokenAdjustEventTrackerFactory([[CheckoutCompleted, 'abc123']]),
+      new TokenAdjustEventTrackerFactory([new AdjustToken(CheckoutCompleted, 'abc123')]),
     ]), // nothing at the end: only tokened events are sent
     propertySetterFactory: new CompositeAdjustPropertySetterFactory([
       new GenericAdjustPropertySetterFactory(),

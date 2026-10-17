@@ -17,35 +17,58 @@ import {
 export type EventClass = abstract new (...args: never[]) => Event;
 
 /**
- * Sends each event whose class is in `tokens`, with that class's dashboard token:
- * `new TokenAdjustEventTrackerFactory([[SignUpCompleted, 'abc123']])`. Other events aren't sent.
+ * The Adjust dashboard token for events of one class, or of a subclass of it:
+ * `new AdjustToken(SignUpCompleted, 'abc123')`.
+ */
+export class AdjustToken {
+  constructor(
+    readonly eventClass: EventClass,
+    readonly token: string,
+  ) {
+    if (typeof eventClass !== 'function') {
+      throw new TypeError(
+        `An Adjust token is for an event class, not ${JSON.stringify(eventClass)}.`,
+      );
+    }
+  }
+
+  /** Whether `event` is of this token's class, or of a subclass of it. */
+  matches(event: Event): boolean {
+    return event instanceof this.eventClass;
+  }
+
+  toString(): string {
+    return `AdjustToken(${this.eventClass.name}, ${this.token})`;
+  }
+}
+
+/**
+ * Sends each event that has a token in `tokens` under that token, and declines the rest:
+ * `new TokenAdjustEventTrackerFactory([new AdjustToken(SignUpCompleted, 'abc123')])`.
  *
  * Events are matched by class, not by name, so a renamed event keeps its token. Throws if a class
  * is listed twice.
  */
 export class TokenAdjustEventTrackerFactory implements AdjustEventTrackerFactory {
-  private readonly tokens: readonly (readonly [EventClass, string])[];
+  private readonly tokens: readonly AdjustToken[];
 
-  constructor(tokens: readonly (readonly [EventClass, string])[]) {
+  constructor(tokens: readonly AdjustToken[]) {
     const seen = new Set<EventClass>();
-    for (const [eventClass] of tokens) {
-      if (typeof eventClass !== 'function') {
-        throw new TypeError(
-          `Adjust tokens are paired with event classes, not ${JSON.stringify(eventClass)}.`,
+    for (const token of tokens) {
+      if (seen.has(token.eventClass)) {
+        throw new Error(
+          `${token.eventClass.name} has two Adjust tokens. Give each event one token.`,
         );
       }
-      if (seen.has(eventClass)) {
-        throw new Error(`${eventClass.name} has two Adjust tokens. Give each event one token.`);
-      }
-      seen.add(eventClass);
+      seen.add(token.eventClass);
     }
-    this.tokens = Object.freeze(tokens.map(([eventClass, token]) => [eventClass, token] as const));
+    this.tokens = Object.freeze([...tokens]);
   }
 
   create(event: Event): Resolution<AdjustEventTracker> {
-    const match = this.tokens.find(([eventClass]) => event instanceof eventClass);
+    const match = this.tokens.find((token) => token.matches(event));
     if (match === undefined) return Resolution.declined();
-    return Resolution.claimed([new TokenAdjustEventTracker(event, match[1])]);
+    return Resolution.claimed([new TokenAdjustEventTracker(event, match.token)]);
   }
 }
 

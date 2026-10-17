@@ -1,6 +1,7 @@
 import type { Analytics } from '@react-native-firebase/analytics';
 import { Resolution, type Property } from '@herald-analytics/core';
 import {
+  AdjustToken,
   CompositeAdjustEventTrackerFactory,
   TokenAdjustEventTrackerFactory,
   type AdjustPropertySetter,
@@ -30,7 +31,7 @@ export function routing(
 
   // Adjust gets only events with a dashboard token.
   const adjustEvents = new CompositeAdjustEventTrackerFactory([
-    new TokenAdjustEventTrackerFactory([[CheckoutCompleted, 'abc123']]),
+    new TokenAdjustEventTrackerFactory([new AdjustToken(CheckoutCompleted, 'abc123')]),
   ]); // nothing at the end: other events aren't sent
   // --8<-- [end:two-kinds]
   return [firebaseEvents, adjustEvents];

@@ -17,7 +17,11 @@ export {
   RequireMappedAdjustPropertySetterFactory,
 } from './chain';
 export type { EventClass } from './factories';
-export { GenericAdjustPropertySetterFactory, TokenAdjustEventTrackerFactory } from './factories';
+export {
+  AdjustToken,
+  GenericAdjustPropertySetterFactory,
+  TokenAdjustEventTrackerFactory,
+} from './factories';
 export type { AdjustEventTracker, AdjustPropertySetter } from './handlers';
 export {
   AdRevenueAdjustEventTracker,

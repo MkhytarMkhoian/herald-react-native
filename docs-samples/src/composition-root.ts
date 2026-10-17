@@ -5,11 +5,11 @@ import { Herald, HeraldProvider } from '@herald-analytics/core';
 import {
   AdjustAnalyticsService,
   AdjustAnalyticsTrackerService,
+  AdjustToken,
   CompositeAdjustEventTrackerFactory,
   CompositeAdjustPropertySetterFactory,
   GenericAdjustPropertySetterFactory,
   TokenAdjustEventTrackerFactory,
-  type EventClass,
 } from '@herald-analytics/adjust';
 import {
   AmplitudeAnalyticsService,
@@ -90,7 +90,7 @@ export function mixpanelProvider(mixpanel: Mixpanel): HeraldProvider {
 
 export function adjustProvider(
   config: AdjustConfig,
-  tokens: readonly (readonly [EventClass, string])[],
+  tokens: readonly AdjustToken[],
 ): HeraldProvider {
   const tracker = new AdjustAnalyticsTrackerService({
     eventTrackerFactory: new CompositeAdjustEventTrackerFactory([
@@ -136,7 +136,7 @@ export interface Vendors {
   readonly firebaseAnalytics: Analytics;
   readonly mixpanel: Mixpanel;
   readonly adjustConfig: AdjustConfig;
-  readonly adjustTokens: readonly (readonly [EventClass, string])[];
+  readonly adjustTokens: readonly AdjustToken[];
 }
 
 export function buildHerald({

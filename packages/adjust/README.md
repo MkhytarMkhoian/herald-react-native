@@ -17,8 +17,8 @@ import { AdjustConfig } from 'react-native-adjust';
 const tracker = new AdjustAnalyticsTrackerService({
   eventTrackerFactory: new CompositeAdjustEventTrackerFactory([
     new TokenAdjustEventTrackerFactory([
-      [SignUpCompleted, 'abc123'], // your event class and its dashboard token
-      [CheckoutCompleted, 'def456'],
+      new AdjustToken(SignUpCompleted, 'abc123'), // your event class and its dashboard token
+      new AdjustToken(CheckoutCompleted, 'def456'),
     ]),
   ]), // nothing at the end: only tokened events are sent
   propertySetterFactory: new CompositeAdjustPropertySetterFactory([

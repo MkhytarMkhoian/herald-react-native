@@ -17,6 +17,7 @@ import {
   AdjustAnalyticsService,
   AdjustAnalyticsTrackerService,
   AdjustRevenueEvent,
+  AdjustToken,
   CompositeAdjustEventTrackerFactory,
   CompositeAdjustPropertySetterFactory,
   GenericAdjustPropertySetterFactory,
@@ -27,7 +28,6 @@ import {
   toAdjustEvent,
   type AdjustEventTracker,
   type AdjustEventTrackerFactory,
-  type EventClass,
 } from '../index';
 import { TestEvent, TestProperty } from './support';
 
@@ -207,8 +207,8 @@ describe('conversion', () => {
 describe('factories', () => {
   test('the token factory claims events of a listed class, with its token', async () => {
     const factory = new TokenAdjustEventTrackerFactory([
-      [SignUpCompleted, 'abc123'],
-      [CheckoutStarted, 'def456'],
+      new AdjustToken(SignUpCompleted, 'abc123'),
+      new AdjustToken(CheckoutStarted, 'def456'),
     ]);
 
     await factory.create(new CheckoutStarted()).handlers[0]?.track();
@@ -218,14 +218,18 @@ describe('factories', () => {
   });
 
   test("an event isn't matched by its name, only by its class", () => {
-    const factory = new TokenAdjustEventTrackerFactory([[CheckoutStarted, 'def456']]);
+    const factory = new TokenAdjustEventTrackerFactory([
+      new AdjustToken(CheckoutStarted, 'def456'),
+    ]);
 
     expect(factory.create(new TestEvent('checkout_started'))).toBe(Resolution.declined());
   });
 
   test('a subclass of a listed class gets its token', () => {
     class TrialCheckoutStarted extends CheckoutStarted {}
-    const factory = new TokenAdjustEventTrackerFactory([[CheckoutStarted, 'def456']]);
+    const factory = new TokenAdjustEventTrackerFactory([
+      new AdjustToken(CheckoutStarted, 'def456'),
+    ]);
 
     expect(factory.create(new TrialCheckoutStarted()).handlers).toEqual([
       expect.objectContaining({ eventToken: 'def456' }),
@@ -236,25 +240,25 @@ describe('factories', () => {
     expect(
       () =>
         new TokenAdjustEventTrackerFactory([
-          [CheckoutStarted, 'def456'],
-          [CheckoutStarted, 'other'],
+          new AdjustToken(CheckoutStarted, 'def456'),
+          new AdjustToken(CheckoutStarted, 'other'),
         ]),
     ).toThrow('CheckoutStarted has two Adjust tokens');
   });
 
   test('the token list cannot be changed after the factory is built', () => {
-    const tokens: [EventClass, string][] = [[SignUpCompleted, 'abc123']];
+    const tokens = [new AdjustToken(SignUpCompleted, 'abc123')];
     const factory = new TokenAdjustEventTrackerFactory(tokens);
 
-    tokens.push([CheckoutStarted, 'def456']);
+    tokens.push(new AdjustToken(CheckoutStarted, 'def456'));
 
     expect(factory.create(new CheckoutStarted())).toBe(Resolution.declined());
   });
 
   test('an event name instead of a class does not compile, and is refused at run time', () => {
-    // @ts-expect-error the list pairs classes, not names, with tokens
-    expect(() => new TokenAdjustEventTrackerFactory([['checkout_started', 'def456']])).toThrow(
-      'Adjust tokens are paired with event classes, not "checkout_started".',
+    // @ts-expect-error a token is for a class, not a name
+    expect(() => new AdjustToken('checkout_started', 'def456')).toThrow(
+      'An Adjust token is for an event class, not "checkout_started".',
     );
   });
 
@@ -262,7 +266,7 @@ describe('factories', () => {
     const tracker = new AdjustAnalyticsTrackerService({
       eventTrackerFactory: new CompositeAdjustEventTrackerFactory([
         new BillingAdjustEventTrackerFactory(),
-        new TokenAdjustEventTrackerFactory([[CheckoutStarted, 'abc123']]),
+        new TokenAdjustEventTrackerFactory([new AdjustToken(CheckoutStarted, 'abc123')]),
       ]),
       propertySetterFactory: new CompositeAdjustPropertySetterFactory([
         new GenericAdjustPropertySetterFactory(),
@@ -285,7 +289,7 @@ describe('factories', () => {
       () =>
         new CompositeAdjustEventTrackerFactory([
           new RequireMappedAdjustEventTrackerFactory(),
-          new TokenAdjustEventTrackerFactory([[CheckoutStarted, 'abc123']]),
+          new TokenAdjustEventTrackerFactory([new AdjustToken(CheckoutStarted, 'abc123')]),
         ]),
     ).toThrow('answers for everything');
     expect(

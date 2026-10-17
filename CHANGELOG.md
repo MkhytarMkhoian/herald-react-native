@@ -1,5 +1,13 @@
 # Change Log
 
+## Version 1.1.0
+
+_Unreleased_
+
+ * Breaking: `TokenAdjustEventTrackerFactory` takes a list of `AdjustToken`s instead of
+   `[class, token]` pairs: `[new AdjustToken(SignUpCompleted, 'abc123')]`. Each token decides which
+   events are its own, the same as in the Android, Flutter and iOS SDKs.
+
 ## Version 1.0.1
 
 _2026-10-16_
