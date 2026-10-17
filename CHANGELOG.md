@@ -2,7 +2,7 @@
 
 ## Version 1.1.0
 
-_Unreleased_
+_2026-10-17_
 
  * Breaking: `TokenAdjustEventTrackerFactory` takes a list of `AdjustToken`s instead of
    `[class, token]` pairs: `[new AdjustToken(SignUpCompleted, 'abc123')]`. Each token decides which
