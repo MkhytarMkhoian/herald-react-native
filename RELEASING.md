@@ -59,7 +59,20 @@ npm's trusted publishing can't create a package, so a new one goes up by hand on
 
 1. Give it the version the other packages have, add it to the Publish workflow's list after the
    packages it depends on, and merge it to `main`.
-2. Publish it from your machine with `npm publish --access public`, after `npm login`.
+2. Publish it from your machine, after `npm login`. Use a clean copy of `main`, so changes you
+   haven't committed stay out of it. The package's types need `@herald-analytics/core`'s, which a
+   fresh copy hasn't built yet, so build core first:
+
+    ```bash
+    git worktree add --detach /tmp/herald-rn-main main
+    cd /tmp/herald-rn-main && npm ci
+    npm run build -w @herald-analytics/core
+    cd packages/<package> && npm publish --access public --dry-run
+    npm publish --access public
+    ```
+
+   Then go back to your clone and remove it: `git worktree remove --force /tmp/herald-rn-main`.
 3. Turn on its trusted publishing, as above.
 
-From the next tag on, the workflow publishes it with the rest.
+From the next tag on, the workflow publishes it with the rest. npm can take a few minutes to show a
+new version, so a version that seems missing right after publishing may only be late.
