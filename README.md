@@ -3,8 +3,6 @@
   <img alt="Herald" src="https://raw.githubusercontent.com/MkhytarMkhoian/herald/main/docs/assets/readme-banner-light.png">
 </picture>
 
-> *A herald announces an event to whoever is listening.*
-
 [![CI](https://github.com/MkhytarMkhoian/herald-react-native/actions/workflows/ci.yml/badge.svg)](https://github.com/MkhytarMkhoian/herald-react-native/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Docs](https://img.shields.io/badge/docs-website-indigo.svg)](https://mkhytarmkhoian.github.io/herald-docs/)
