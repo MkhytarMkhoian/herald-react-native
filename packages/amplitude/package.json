@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/amplitude",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Sends Herald events and properties to Amplitude: events, user properties, screen views and revenue.",
   "keywords": [
     "analytics",
@@ -44,7 +44,7 @@
     "prepack": "bob build"
   },
   "dependencies": {
-    "@herald-analytics/core": "^1.1.0"
+    "@herald-analytics/core": "^1.2.0"
   },
   "peerDependencies": {
     "@amplitude/analytics-react-native": "^1.12.0"

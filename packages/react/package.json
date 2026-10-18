@@ -1,6 +1,6 @@
 {
   "name": "@herald-analytics/react",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Track Herald events from React Native screens and lists, with React Navigation or Expo Router: screen views each time a screen gets focus, impressions when a list item is really on screen, and taps.",
   "keywords": [
     "analytics",
@@ -58,7 +58,7 @@
     "prepack": "bob build"
   },
   "dependencies": {
-    "@herald-analytics/core": "^1.1.0"
+    "@herald-analytics/core": "^1.2.0"
   },
   "peerDependencies": {
     "@react-navigation/native": "^7.0.0",
@@ -75,7 +75,7 @@
     }
   },
   "devDependencies": {
-    "@herald-analytics/testing": "^1.1.0",
+    "@herald-analytics/testing": "^1.2.0",
     "@react-native/jest-preset": "0.86.3",
     "@react-navigation/native": "7.5.1",
     "@testing-library/react-native": "14.1.0",

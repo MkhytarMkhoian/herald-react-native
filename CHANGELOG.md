@@ -2,7 +2,7 @@
 
 ## Version 1.2.0
 
-_Unreleased_
+_2026-10-18_
 
  * New: `@herald-analytics/meta` sends events to Meta's App Events, over `react-native-fbsdk-next`
    13: conversions under Meta's standard names, and purchases through `MetaPurchaseEvent`.
