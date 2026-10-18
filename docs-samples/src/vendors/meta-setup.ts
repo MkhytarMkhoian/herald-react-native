@@ -1,5 +1,12 @@
 import { AppEventsLogger, Settings } from 'react-native-fbsdk-next';
-import { HeraldProvider, Resolution, parametersOf, type Event } from '@herald-analytics/core';
+import {
+  HeraldProvider,
+  Resolution,
+  parametersOf,
+  type ConsentService,
+  type Event,
+  type EventTrackerService,
+} from '@herald-analytics/core';
 import {
   CompositeMetaEventTrackerFactory,
   MetaAnalyticsService,
@@ -34,6 +41,48 @@ export function metaProvider(featureFactories: MetaEventTrackerFactory[]): Heral
   // --8<-- [end:provider]
   return provider;
 }
+
+export function gatedMetaProvider(featureFactories: MetaEventTrackerFactory[]): HeraldProvider {
+  const tracker = new MetaAnalyticsTrackerService({
+    eventTrackerFactory: new CompositeMetaEventTrackerFactory(featureFactories),
+  });
+  const service = new MetaAnalyticsService({ appEvents: AppEventsLogger, settings: Settings });
+  // --8<-- [start:gate]
+  const gate = new ConsentGate(tracker, service);
+
+  const provider = new HeraldProvider({
+    name: 'meta',
+    events: gate, // dropped while consent is off
+    identity: service,
+    lifecycle: service,
+    consent: gate, // keeps the answer, then turns Meta's own switch
+  });
+  // --8<-- [end:gate]
+  return provider;
+}
+
+// --8<-- [start:gate-class]
+/**
+ * Meta's own switch doesn't stop the events your app logs, so this drops them while consent is off.
+ */
+export class ConsentGate implements EventTrackerService, ConsentService {
+  private enabled = false;
+
+  constructor(
+    private readonly events: EventTrackerService,
+    private readonly consent: ConsentService,
+  ) {}
+
+  async track(event: Event): Promise<void> {
+    if (this.enabled) await this.events.track(event);
+  }
+
+  async setEnabled(enabled: boolean): Promise<void> {
+    this.enabled = enabled;
+    await this.consent.setEnabled(enabled);
+  }
+}
+// --8<-- [end:gate-class]
 
 // --8<-- [start:conversions]
 export class CheckoutMetaEventTrackerFactory implements MetaEventTrackerFactory {
