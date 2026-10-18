@@ -11,12 +11,12 @@
 
 Herald is an analytics library for mobile apps. Your app describes what happened as an event, and
 Herald sends that event to every analytics service you use: Firebase, Adjust, Mixpanel, AppsFlyer,
-Amplitude, or one you build yourself.
+Amplitude, Meta, or one you build yourself.
 
 This repository is the **React Native SDK**, in TypeScript. It works like the
 [Android](https://github.com/MkhytarMkhoian/herald),
 [Flutter](https://github.com/MkhytarMkhoian/herald-flutter) and
-[iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, over each vendor's official React Native
+[iOS](https://github.com/MkhytarMkhoian/herald-ios) SDKs, over each vendor's React Native
 package.
 
 ## Install
@@ -82,11 +82,12 @@ herald.track(new CheckoutStarted('pro', 3));
 | [`@herald-analytics/mixpanel`](https://www.npmjs.com/package/@herald-analytics/mixpanel) | Sends to Mixpanel: events, user profile and super properties. |
 | [`@herald-analytics/appsflyer`](https://www.npmjs.com/package/@herald-analytics/appsflyer) | Sends to AppsFlyer: conversions, purchases, subscriptions and ad revenue. |
 | [`@herald-analytics/amplitude`](https://www.npmjs.com/package/@herald-analytics/amplitude) | Sends to Amplitude: events, user properties, screen views and revenue. |
+| [`@herald-analytics/meta`](https://www.npmjs.com/package/@herald-analytics/meta) | Sends to Meta: conversions and purchases, for Meta's ads. |
 | [`@herald-analytics/log`](https://www.npmjs.com/package/@herald-analytics/log) | Prints every call, for debug builds. |
 | [`@herald-analytics/testing`](https://www.npmjs.com/package/@herald-analytics/testing) | `FakeAnalyticsProvider`, a fake vendor that records events so your tests can check them. |
 | [`@herald-analytics/react`](https://www.npmjs.com/package/@herald-analytics/react) | Optional: tracking from screens and lists, such as screen views and impressions. |
 
-Each vendor package works over that vendor's official React Native package, which your app installs
+Each vendor package works over that vendor's React Native package, which your app installs
 itself, so React Native links its native code.
 <!-- --8<-- [end:packages] -->
 
@@ -103,6 +104,7 @@ against these vendor packages:
 | `@amplitude/analytics-react-native` | 1.12 or newer |
 | `react-native-adjust` | 5.8 or newer |
 | `react-native-appsflyer` | 7 |
+| `react-native-fbsdk-next` | 13.4 or newer |
 
 Newer versions of an SDK work within the same major version. `@herald-analytics/react` works with
 React Navigation 7 and Expo Router 57 or newer.

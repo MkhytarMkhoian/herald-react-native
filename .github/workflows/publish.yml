@@ -36,7 +36,7 @@ jobs:
           version="${GITHUB_REF_NAME#v}"
           tag=latest
           if [[ "$version" == *-* ]]; then tag=next; fi
-          for package in core log testing react firebase adjust mixpanel appsflyer amplitude; do
+          for package in core log testing react firebase adjust mixpanel appsflyer amplitude meta; do
             npm publish --workspace "packages/$package" --access public --tag "$tag"
           done
 
