@@ -1,8 +1,8 @@
 # Change Log
 
-## Unreleased
+## Version 1.3.0
 
-_Unreleased_
+_2026-11-02_
 
  * New: `@herald-analytics/meta` documents the two settings to turn off in `AndroidManifest.xml` if
    you raise Android to Meta's SDK 19: `com.facebook.sdk.AutoLogMetaDataEnabled` and
