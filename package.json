@@ -97,17 +97,17 @@
     "@react-native/babel-preset": "0.86.3",
     "@react-navigation/native-stack": "^7.21.0",
     "@types/node": "^24.19.2",
-    "eslint": "^10.12.0",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "jest": "^30.5.2",
     "prettier": "^3.9.10",
     "react": "19.2.3",
     "react-native": "0.86.3",
-    "react-native-builder-bob": "^0.43.2",
+    "react-native-builder-bob": "^0.44.1",
     "typedoc": "^0.28.20",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.71.2"
+    "typescript-eslint": "^8.72.1"
   },
   "overrides": {
     "react-dom": "19.2.3",

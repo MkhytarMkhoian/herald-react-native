@@ -50,7 +50,7 @@
     "@amplitude/analytics-react-native": "^1.12.0"
   },
   "devDependencies": {
-    "@amplitude/analytics-react-native": "1.12.2"
+    "@amplitude/analytics-react-native": "1.13.0"
   },
   "react-native-builder-bob": {
     "source": "src",
