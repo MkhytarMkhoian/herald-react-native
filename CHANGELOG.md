@@ -1,5 +1,14 @@
 # Change Log
 
+## Unreleased
+
+_Unreleased_
+
+ * New: `@herald-analytics/meta` documents the two settings to turn off in `AndroidManifest.xml` if
+   you raise Android to Meta's SDK 19: `com.facebook.sdk.AutoLogMetaDataEnabled` and
+   `com.facebook.sdk.AutoLogProductImprovementEnabled`. `setEnabled` can't reach them through
+   `react-native-fbsdk-next` 13.
+
 ## Version 1.2.0
 
 _2026-10-18_

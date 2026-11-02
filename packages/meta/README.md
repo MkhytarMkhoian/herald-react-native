@@ -35,6 +35,15 @@ const provider = new HeraldProvider({
 as installs, and the advertiser id. It doesn't stop the events your app logs. Call it with the
 stored answer on every launch.
 
+`react-native-fbsdk-next` uses Meta's SDK 18. If you raise Android to Meta's SDK 19 with
+`facebookSdkVersion`, Meta also adds the screen title and app link URL to events and has a product
+improvement setting, and `setEnabled` can't turn those off. Turn them off in `AndroidManifest.xml`:
+
+```xml
+<meta-data android:name="com.facebook.sdk.AutoLogMetaDataEnabled" android:value="false" />
+<meta-data android:name="com.facebook.sdk.AutoLogProductImprovementEnabled" android:value="false" />
+```
+
 Purchases go through `MetaPurchaseEvent` (`fb_mobile_purchase`), and other conversions under Meta's
 standard names, such as `AppEventsLogger.AppEvents.CompletedRegistration`.
 

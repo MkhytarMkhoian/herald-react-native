@@ -21,6 +21,11 @@ export interface MetaAnalyticsServiceOptions {
  * installs, and the advertiser id. It doesn't stop the events your app logs. Turn Meta's automatic
  * collection off in both native projects, as `react-native-fbsdk-next`'s README shows, so a fresh
  * install collects nothing by itself. Then call `setEnabled` with the stored answer on every launch.
+ *
+ * `react-native-fbsdk-next` uses Meta's SDK 18. If you raise Android to Meta's SDK 19 with
+ * `facebookSdkVersion`, also set `com.facebook.sdk.AutoLogMetaDataEnabled` and
+ * `com.facebook.sdk.AutoLogProductImprovementEnabled` to `false` in `AndroidManifest.xml`: Meta 19
+ * collects that data by itself, and `setEnabled` can't turn it off.
  */
 export class MetaAnalyticsService
   implements AnalyticsLifecycleService, IdentifiableUserService, ConsentService
